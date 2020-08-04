@@ -1,0 +1,889 @@
+2020-05-28 17:43:28 | INFO | fairseq.distributed_utils | distributed init (rank 1): tcp://localhost:10344
+2020-05-28 17:43:28 | INFO | fairseq.distributed_utils | distributed init (rank 0): tcp://localhost:10344
+2020-05-28 17:43:29 | INFO | fairseq.distributed_utils | initialized host mc-All-Series as rank 1
+2020-05-28 17:43:29 | INFO | fairseq.distributed_utils | initialized host mc-All-Series as rank 0
+2020-05-28 17:43:31 | INFO | fairseq_cli.train | Namespace(activation='relu', adam_betas='(0.9, 0.999)', adam_eps=1e-08, agg_zero_pad=False, aggregator='cnn', all_gather_list_size=16384, arch='wav2vec', balanced_classes=False, best_checkpoint_metric='loss', bf16=False, bpe=None, broadcast_buffers=False, bucket_cap_mb=25, checkpoint_suffix='', clip_norm=25, combine_groups=False, conv_aggregator_layers='[(512, 2, 1), (512, 3, 1), (512, 4, 1), (512, 5, 1), (512, 6, 1), (512, 7, 1), (512, 8, 1), (512, 9, 1), (512, 10, 1), (512, 11, 1), (512, 12, 1), (512, 13, 1)]', conv_feature_layers='[(512, 10, 5), (512, 8, 4), (512, 4, 2), (512, 4, 2), (512, 4, 2), (512, 1, 1), (512, 1, 1)]', cpu=False, criterion='binary_cross_entropy', cross_sample_negatives=0, curriculum=0, data='./', data_buffer_size=10, dataset_impl=None, ddp_backend='c10d', device_id=0, disable_validation=False, distributed_backend='nccl', distributed_init_method='tcp://localhost:10344', distributed_no_spawn=False, distributed_port=-1, distributed_rank=0, distributed_world_size=2, distributed_wrapper='DDP', dropout=0.0, dropout_agg=0.0, dropout_features=0.0, empty_cache_freq=0, encoder='cnn', fast_stat_sync=False, find_unused_parameters=False, fix_batches_to_gpus=False, fixed_validation_seed=None, fp16=True, fp16_init_scale=128, fp16_no_flatten_grads=False, fp16_scale_tolerance=0.0, fp16_scale_window=None, gru_dim=512, infonce=False, keep_best_checkpoints=-1, keep_interval_updates=-1, keep_last_epochs=-1, localsgd_frequency=3, log_compression=True, log_format=None, log_interval=100, log_keys=None, loss_weights=None, lr=[1e-06], lr_period_updates=-1, lr_scheduler='cosine', lr_shrink=0.1, max_epoch=0, max_lr=0.005, max_sample_size=150000, max_sentences=None, max_sentences_valid=None, max_tokens=150000, max_tokens_valid=150000, max_update=400000, maximize_best_checkpoint_metric=False, memory_efficient_bf16=False, memory_efficient_fp16=False, min_loss_scale=0.0001, min_lr=1e-09, min_sample_size=None, model_parallel_size=1, no_conv_bias=False, no_epoch_checkpoints=True, no_last_checkpoints=False, no_progress_bar=False, no_save=False, no_save_optimizer_state=False, non_affine_group_norm=False, nprocs_per_node=2, num_negatives=10, num_workers=6, offset='auto', optimizer='adam', optimizer_overrides='{}', patience=-1, prediction_steps=12, project_features='none', quantization_config_path=None, required_batch_size_multiple=8, reset_dataloader=False, reset_lr_scheduler=False, reset_meters=False, reset_optimizer=False, residual_scale=0.5, restore_file='checkpoint_last.pt', sample_distance=None, sample_rate=16000, save_dir='./model', save_interval=1, save_interval_updates=0, seed=1, sentence_avg=False, skip_connections_agg=True, skip_connections_feat=False, skip_invalid_size_inputs_valid_test=True, slowmo_algorithm='LocalSGD', slowmo_momentum=None, t_mult=1, task='audio_pretraining', tensorboard_logdir='', threshold_loss_scale=None, tokenizer=None, tpu=False, train_subset='train', update_freq=[1], use_bmuf=False, use_old_adam=False, user_dir=None, valid_subset='valid', validate_interval=1, vq_depth=1, vq_dim=0, vq_gamma=0.25, vq_groups=2, vq_temp='(2.0, 0.5, 0.999995)', vq_type='none', vq_vars=320, warmup_init_lr=1e-07, warmup_updates=500, weight_decay=0.0)
+2020-05-28 17:43:32 | INFO | fairseq.models.wav2vec | Wav2VecModel(
+  (feature_extractor): ConvFeatureExtractionModel(
+    (conv_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv1d(1, 512, kernel_size=(10,), stride=(5,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (1): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(8,), stride=(4,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (2): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(4,), stride=(2,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (3): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(4,), stride=(2,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (4): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(4,), stride=(2,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (5): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (6): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+    )
+  )
+  (feature_aggregator): ConvAggegator(
+    (conv_layers): Sequential(
+      (0): Sequential(
+        (0): ReplicationPad1d((1, 0))
+        (1): Conv1d(512, 512, kernel_size=(2,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (1): Sequential(
+        (0): ReplicationPad1d((2, 0))
+        (1): Conv1d(512, 512, kernel_size=(3,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (2): Sequential(
+        (0): ReplicationPad1d((3, 0))
+        (1): Conv1d(512, 512, kernel_size=(4,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (3): Sequential(
+        (0): ReplicationPad1d((4, 0))
+        (1): Conv1d(512, 512, kernel_size=(5,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (4): Sequential(
+        (0): ReplicationPad1d((5, 0))
+        (1): Conv1d(512, 512, kernel_size=(6,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (5): Sequential(
+        (0): ReplicationPad1d((6, 0))
+        (1): Conv1d(512, 512, kernel_size=(7,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (6): Sequential(
+        (0): ReplicationPad1d((7, 0))
+        (1): Conv1d(512, 512, kernel_size=(8,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (7): Sequential(
+        (0): ReplicationPad1d((8, 0))
+        (1): Conv1d(512, 512, kernel_size=(9,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (8): Sequential(
+        (0): ReplicationPad1d((9, 0))
+        (1): Conv1d(512, 512, kernel_size=(10,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (9): Sequential(
+        (0): ReplicationPad1d((10, 0))
+        (1): Conv1d(512, 512, kernel_size=(11,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (10): Sequential(
+        (0): ReplicationPad1d((11, 0))
+        (1): Conv1d(512, 512, kernel_size=(12,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (11): Sequential(
+        (0): ReplicationPad1d((12, 0))
+        (1): Conv1d(512, 512, kernel_size=(13,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+    )
+    (residual_proj): ModuleList(
+      (0): None
+      (1): None
+      (2): None
+      (3): None
+      (4): None
+      (5): None
+      (6): None
+      (7): None
+      (8): None
+      (9): None
+      (10): None
+      (11): None
+    )
+  )
+  (wav2vec_predictions): Wav2VecPredictionsModel(
+    (project_to_steps): ConvTranspose2d(512, 512, kernel_size=(1, 12), stride=(1, 1))
+    (dropout): Dropout(p=0.0, inplace=False)
+  )
+  (dropout_feats): Dropout(p=0.0, inplace=False)
+  (dropout_agg): Dropout(p=0.0, inplace=False)
+)
+2020-05-28 17:43:32 | INFO | fairseq_cli.train | Wav2VecModel(
+  (feature_extractor): ConvFeatureExtractionModel(
+    (conv_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv1d(1, 512, kernel_size=(10,), stride=(5,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (1): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(8,), stride=(4,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (2): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(4,), stride=(2,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (3): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(4,), stride=(2,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (4): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(4,), stride=(2,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (5): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+      (6): Sequential(
+        (0): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+        (1): Dropout(p=0.0, inplace=False)
+        (2): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (3): ReLU()
+      )
+    )
+  )
+  (feature_aggregator): ConvAggegator(
+    (conv_layers): Sequential(
+      (0): Sequential(
+        (0): ReplicationPad1d((1, 0))
+        (1): Conv1d(512, 512, kernel_size=(2,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (1): Sequential(
+        (0): ReplicationPad1d((2, 0))
+        (1): Conv1d(512, 512, kernel_size=(3,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (2): Sequential(
+        (0): ReplicationPad1d((3, 0))
+        (1): Conv1d(512, 512, kernel_size=(4,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (3): Sequential(
+        (0): ReplicationPad1d((4, 0))
+        (1): Conv1d(512, 512, kernel_size=(5,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (4): Sequential(
+        (0): ReplicationPad1d((5, 0))
+        (1): Conv1d(512, 512, kernel_size=(6,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (5): Sequential(
+        (0): ReplicationPad1d((6, 0))
+        (1): Conv1d(512, 512, kernel_size=(7,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (6): Sequential(
+        (0): ReplicationPad1d((7, 0))
+        (1): Conv1d(512, 512, kernel_size=(8,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (7): Sequential(
+        (0): ReplicationPad1d((8, 0))
+        (1): Conv1d(512, 512, kernel_size=(9,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (8): Sequential(
+        (0): ReplicationPad1d((9, 0))
+        (1): Conv1d(512, 512, kernel_size=(10,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (9): Sequential(
+        (0): ReplicationPad1d((10, 0))
+        (1): Conv1d(512, 512, kernel_size=(11,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (10): Sequential(
+        (0): ReplicationPad1d((11, 0))
+        (1): Conv1d(512, 512, kernel_size=(12,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+      (11): Sequential(
+        (0): ReplicationPad1d((12, 0))
+        (1): Conv1d(512, 512, kernel_size=(13,), stride=(1,))
+        (2): Dropout(p=0.0, inplace=False)
+        (3): Fp32GroupNorm(1, 512, eps=1e-05, affine=True)
+        (4): ReLU()
+      )
+    )
+    (residual_proj): ModuleList(
+      (0): None
+      (1): None
+      (2): None
+      (3): None
+      (4): None
+      (5): None
+      (6): None
+      (7): None
+      (8): None
+      (9): None
+      (10): None
+      (11): None
+    )
+  )
+  (wav2vec_predictions): Wav2VecPredictionsModel(
+    (project_to_steps): ConvTranspose2d(512, 512, kernel_size=(1, 12), stride=(1, 1))
+    (dropout): Dropout(p=0.0, inplace=False)
+  )
+  (dropout_feats): Dropout(p=0.0, inplace=False)
+  (dropout_agg): Dropout(p=0.0, inplace=False)
+)
+2020-05-28 17:43:32 | INFO | fairseq_cli.train | model wav2vec, criterion BinaryCrossEntropyCriterion
+2020-05-28 17:43:32 | INFO | fairseq_cli.train | num. model params: 32537088 (num. trained: 32537088)
+2020-05-28 17:43:32 | INFO | fairseq.trainer | detected shared parameter: feature_extractor.conv_layers.0.0.bias <- feature_extractor.conv_layers.1.0.bias
+2020-05-28 17:43:32 | INFO | fairseq.trainer | detected shared parameter: feature_extractor.conv_layers.0.0.bias <- feature_extractor.conv_layers.2.0.bias
+2020-05-28 17:43:32 | INFO | fairseq.trainer | detected shared parameter: feature_extractor.conv_layers.0.0.bias <- feature_extractor.conv_layers.3.0.bias
+2020-05-28 17:43:32 | INFO | fairseq.trainer | detected shared parameter: feature_extractor.conv_layers.0.0.bias <- feature_extractor.conv_layers.4.0.bias
+2020-05-28 17:43:32 | INFO | fairseq.trainer | detected shared parameter: feature_extractor.conv_layers.0.0.bias <- feature_extractor.conv_layers.5.0.bias
+2020-05-28 17:43:32 | INFO | fairseq.trainer | detected shared parameter: feature_extractor.conv_layers.0.0.bias <- feature_extractor.conv_layers.6.0.bias
+2020-05-28 17:43:32 | INFO | fairseq_cli.train | training on 2 devices (GPUs/TPUs)
+2020-05-28 17:43:32 | INFO | fairseq_cli.train | max tokens per GPU = 150000 and max sentences per GPU = None
+2020-05-28 17:43:32 | INFO | fairseq.trainer | no existing checkpoint found ./model/checkpoint_last.pt
+2020-05-28 17:43:32 | INFO | fairseq.trainer | loading train data for epoch 1
+2020-05-28 17:43:48 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 64.0
+2020-05-28 17:43:48 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 32.0
+2020-05-28 17:43:49 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 16.0
+2020-05-28 17:43:49 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 8.0
+2020-05-28 17:43:50 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 4.0
+2020-05-28 17:43:50 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 2.0
+2020-05-28 17:43:51 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 1.0
+2020-05-28 17:44:40 | INFO | train_inner | epoch 001:    107 / 47753 loss=6.62811, wps=33873.9, ups=1.99, wpb=16993.2, bsz=186925, num_updates=100, lr=0.00100008, gnorm=75.92, clip=84, loss_scale=1, train_wall=50, wall=69
+2020-05-28 17:45:31 | INFO | train_inner | epoch 001:    207 / 47753 loss=4.84342, wps=34258.3, ups=1.97, wpb=17379.7, bsz=191177, num_updates=200, lr=0.00200006, gnorm=1.416, clip=0, loss_scale=1, train_wall=51, wall=119
+2020-05-28 17:46:21 | INFO | train_inner | epoch 001:    307 / 47753 loss=4.85322, wps=34752.2, ups=2, wpb=17345.9, bsz=190805, num_updates=300, lr=0.00300004, gnorm=2.059, clip=0, loss_scale=1, train_wall=50, wall=169
+2020-05-28 17:46:30 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.5
+2020-05-28 17:47:11 | INFO | train_inner | epoch 001:    408 / 47753 loss=6.17314, wps=34493.4, ups=2, wpb=17261, bsz=189871, num_updates=400, lr=0.00400002, gnorm=7.561, clip=8, loss_scale=1, train_wall=50, wall=219
+2020-05-28 17:48:01 | INFO | train_inner | epoch 001:    508 / 47753 loss=4.51098, wps=34294.5, ups=1.99, wpb=17220.2, bsz=189423, num_updates=500, lr=0.005, gnorm=0.996, clip=0, loss_scale=0, train_wall=50, wall=269
+2020-05-28 17:48:52 | INFO | train_inner | epoch 001:    608 / 47753 loss=4.39154, wps=34188.3, ups=1.98, wpb=17266.3, bsz=189930, num_updates=600, lr=0.005, gnorm=0.436, clip=0, loss_scale=0, train_wall=50, wall=320
+2020-05-28 17:49:42 | INFO | train_inner | epoch 001:    708 / 47753 loss=4.34048, wps=33871.4, ups=2.01, wpb=16828.3, bsz=185111, num_updates=700, lr=0.005, gnorm=0.392, clip=0, loss_scale=0, train_wall=50, wall=370
+2020-05-28 17:50:32 | INFO | train_inner | epoch 001:    808 / 47753 loss=4.28192, wps=34272, ups=1.98, wpb=17329.1, bsz=190620, num_updates=800, lr=0.00499999, gnorm=0.391, clip=0, loss_scale=0, train_wall=50, wall=420
+2020-05-28 17:51:23 | INFO | train_inner | epoch 001:    908 / 47753 loss=4.20747, wps=35136.8, ups=1.98, wpb=17705.2, bsz=194757, num_updates=900, lr=0.00499999, gnorm=0.446, clip=0, loss_scale=0, train_wall=50, wall=471
+2020-05-28 17:52:13 | INFO | train_inner | epoch 001:   1008 / 47753 loss=4.15765, wps=35459.7, ups=2, wpb=17745.5, bsz=195200, num_updates=1000, lr=0.00499998, gnorm=0.443, clip=0, loss_scale=0, train_wall=50, wall=521
+2020-05-28 17:53:03 | INFO | train_inner | epoch 001:   1108 / 47753 loss=4.13673, wps=34324.1, ups=1.99, wpb=17231.2, bsz=189543, num_updates=1100, lr=0.00499997, gnorm=0.465, clip=0, loss_scale=0, train_wall=50, wall=571
+2020-05-28 17:53:53 | INFO | train_inner | epoch 001:   1208 / 47753 loss=4.0988, wps=34151.4, ups=1.99, wpb=17173.1, bsz=188904, num_updates=1200, lr=0.00499996, gnorm=0.48, clip=0, loss_scale=0, train_wall=50, wall=621
+2020-05-28 17:54:43 | INFO | train_inner | epoch 001:   1308 / 47753 loss=4.07258, wps=34517.8, ups=2, wpb=17280.4, bsz=190085, num_updates=1300, lr=0.00499995, gnorm=0.339, clip=0, loss_scale=0, train_wall=50, wall=671
+2020-05-28 17:55:33 | INFO | train_inner | epoch 001:   1408 / 47753 loss=4.05247, wps=34201.8, ups=2, wpb=17099.8, bsz=188098, num_updates=1400, lr=0.00499994, gnorm=0.435, clip=0, loss_scale=0, train_wall=50, wall=721
+2020-05-28 17:56:24 | INFO | train_inner | epoch 001:   1508 / 47753 loss=4.01449, wps=34653.3, ups=1.97, wpb=17598.4, bsz=193583, num_updates=1500, lr=0.00499992, gnorm=0.424, clip=0, loss_scale=0, train_wall=51, wall=772
+2020-05-28 17:57:13 | INFO | train_inner | epoch 001:   1608 / 47753 loss=3.99691, wps=34481.6, ups=2.02, wpb=17098.3, bsz=188082, num_updates=1600, lr=0.00499991, gnorm=0.432, clip=0, loss_scale=0, train_wall=50, wall=822
+2020-05-28 17:58:04 | INFO | train_inner | epoch 001:   1708 / 47753 loss=3.95377, wps=34762, ups=1.99, wpb=17500.9, bsz=192510, num_updates=1700, lr=0.00499989, gnorm=0.41, clip=0, loss_scale=0, train_wall=50, wall=872
+2020-05-28 17:58:54 | INFO | train_inner | epoch 001:   1808 / 47753 loss=3.93033, wps=34731.3, ups=2, wpb=17345.6, bsz=190802, num_updates=1800, lr=0.00499987, gnorm=0.415, clip=0, loss_scale=0, train_wall=50, wall=922
+2020-05-28 17:59:44 | INFO | train_inner | epoch 001:   1908 / 47753 loss=3.87897, wps=35604.2, ups=2, wpb=17810, bsz=195910, num_updates=1900, lr=0.00499985, gnorm=0.466, clip=0, loss_scale=0, train_wall=50, wall=972
+2020-05-28 18:00:34 | INFO | train_inner | epoch 001:   2008 / 47753 loss=3.84808, wps=35207.6, ups=1.99, wpb=17676.8, bsz=194445, num_updates=2000, lr=0.00499983, gnorm=0.356, clip=0, loss_scale=0, train_wall=50, wall=1022
+2020-05-28 18:01:24 | INFO | train_inner | epoch 001:   2108 / 47753 loss=3.87991, wps=34372.8, ups=2, wpb=17171.3, bsz=188884, num_updates=2100, lr=0.0049998, gnorm=0.432, clip=0, loss_scale=0, train_wall=50, wall=1072
+2020-05-28 18:02:14 | INFO | train_inner | epoch 001:   2208 / 47753 loss=3.82397, wps=34311.2, ups=2.01, wpb=17110.9, bsz=188220, num_updates=2200, lr=0.00499978, gnorm=0.365, clip=0, loss_scale=0, train_wall=50, wall=1122
+2020-05-28 18:03:04 | INFO | train_inner | epoch 001:   2308 / 47753 loss=3.80611, wps=34641.4, ups=1.98, wpb=17490.8, bsz=192399, num_updates=2300, lr=0.00499975, gnorm=0.375, clip=0, loss_scale=0, train_wall=50, wall=1172
+2020-05-28 18:03:54 | INFO | train_inner | epoch 001:   2408 / 47753 loss=3.78851, wps=33928.4, ups=2, wpb=16991.6, bsz=186907, num_updates=2400, lr=0.00499972, gnorm=0.391, clip=0, loss_scale=0, train_wall=50, wall=1222
+2020-05-28 18:04:45 | INFO | train_inner | epoch 001:   2508 / 47753 loss=3.7467, wps=34904.4, ups=1.99, wpb=17515.1, bsz=192666, num_updates=2500, lr=0.00499969, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=1273
+2020-05-28 18:05:35 | INFO | train_inner | epoch 001:   2608 / 47753 loss=3.71132, wps=34688, ups=1.99, wpb=17468.9, bsz=192158, num_updates=2600, lr=0.00499966, gnorm=0.41, clip=0, loss_scale=0, train_wall=50, wall=1323
+2020-05-28 18:06:25 | INFO | train_inner | epoch 001:   2708 / 47753 loss=3.7037, wps=34594.9, ups=2.01, wpb=17229.6, bsz=189526, num_updates=2700, lr=0.00499963, gnorm=0.427, clip=0, loss_scale=0, train_wall=50, wall=1373
+2020-05-28 18:07:14 | INFO | train_inner | epoch 001:   2808 / 47753 loss=3.7216, wps=34329.8, ups=2.03, wpb=16949.9, bsz=186449, num_updates=2800, lr=0.00499959, gnorm=0.423, clip=0, loss_scale=0, train_wall=49, wall=1422
+2020-05-28 18:08:05 | INFO | train_inner | epoch 001:   2908 / 47753 loss=3.69524, wps=34324.9, ups=1.98, wpb=17318.8, bsz=190506, num_updates=2900, lr=0.00499955, gnorm=0.422, clip=0, loss_scale=0, train_wall=50, wall=1473
+2020-05-28 18:08:55 | INFO | train_inner | epoch 001:   3008 / 47753 loss=3.64962, wps=34782.6, ups=2, wpb=17410.6, bsz=191516, num_updates=3000, lr=0.00499952, gnorm=0.403, clip=0, loss_scale=0, train_wall=50, wall=1523
+2020-05-28 18:09:44 | INFO | train_inner | epoch 001:   3108 / 47753 loss=3.62836, wps=34442.7, ups=2.01, wpb=17155, bsz=188705, num_updates=3100, lr=0.00499948, gnorm=0.433, clip=0, loss_scale=0, train_wall=50, wall=1573
+2020-05-28 18:10:34 | INFO | train_inner | epoch 001:   3208 / 47753 loss=3.62196, wps=34268.8, ups=2.01, wpb=17087.7, bsz=187965, num_updates=3200, lr=0.00499944, gnorm=0.392, clip=0, loss_scale=0, train_wall=50, wall=1622
+2020-05-28 18:11:24 | INFO | train_inner | epoch 001:   3308 / 47753 loss=3.60604, wps=34850, ups=2.02, wpb=17219.8, bsz=189418, num_updates=3300, lr=0.00499939, gnorm=0.326, clip=0, loss_scale=0, train_wall=49, wall=1672
+2020-05-28 18:12:13 | INFO | train_inner | epoch 001:   3408 / 47753 loss=3.62945, wps=35030.2, ups=2.02, wpb=17354, bsz=190894, num_updates=3400, lr=0.00499935, gnorm=0.38, clip=0, loss_scale=0, train_wall=49, wall=1721
+2020-05-28 18:13:03 | INFO | train_inner | epoch 001:   3508 / 47753 loss=3.59036, wps=34205, ups=1.99, wpb=17145.5, bsz=188600, num_updates=3500, lr=0.0049993, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=1771
+2020-05-28 18:13:05 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.25
+2020-05-28 18:13:54 | INFO | train_inner | epoch 001:   3609 / 47753 loss=3.57891, wps=34198.9, ups=1.96, wpb=17435.5, bsz=191791, num_updates=3600, lr=0.00499926, gnorm=0.401, clip=0, loss_scale=0, train_wall=51, wall=1822
+2020-05-28 18:14:44 | INFO | train_inner | epoch 001:   3709 / 47753 loss=3.56564, wps=34669, ups=2, wpb=17299.3, bsz=190292, num_updates=3700, lr=0.00499921, gnorm=0.331, clip=0, loss_scale=0, train_wall=50, wall=1872
+2020-05-28 18:15:34 | INFO | train_inner | epoch 001:   3809 / 47753 loss=3.53377, wps=34410.5, ups=2.01, wpb=17109.8, bsz=188208, num_updates=3800, lr=0.00499916, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=1922
+2020-05-28 18:16:24 | INFO | train_inner | epoch 001:   3909 / 47753 loss=3.54458, wps=34340.3, ups=2, wpb=17153, bsz=188683, num_updates=3900, lr=0.00499911, gnorm=0.378, clip=0, loss_scale=0, train_wall=50, wall=1972
+2020-05-28 18:17:14 | INFO | train_inner | epoch 001:   4009 / 47753 loss=3.54116, wps=34512.2, ups=1.99, wpb=17384.5, bsz=191229, num_updates=4000, lr=0.00499905, gnorm=0.352, clip=0, loss_scale=0, train_wall=50, wall=2022
+2020-05-28 18:18:05 | INFO | train_inner | epoch 001:   4109 / 47753 loss=3.48267, wps=34796.1, ups=1.98, wpb=17530.4, bsz=192834, num_updates=4100, lr=0.004999, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=2073
+2020-05-28 18:18:55 | INFO | train_inner | epoch 001:   4209 / 47753 loss=3.51865, wps=34306, ups=2.01, wpb=17096.5, bsz=188062, num_updates=4200, lr=0.00499894, gnorm=0.375, clip=0, loss_scale=0, train_wall=50, wall=2123
+2020-05-28 18:19:44 | INFO | train_inner | epoch 001:   4309 / 47753 loss=3.52433, wps=33807.2, ups=2.01, wpb=16856.7, bsz=185424, num_updates=4300, lr=0.00499888, gnorm=0.339, clip=0, loss_scale=0, train_wall=50, wall=2172
+2020-05-28 18:20:34 | INFO | train_inner | epoch 001:   4409 / 47753 loss=3.4428, wps=34988.3, ups=2.01, wpb=17400, bsz=191400, num_updates=4400, lr=0.00499882, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=2222
+2020-05-28 18:21:24 | INFO | train_inner | epoch 001:   4509 / 47753 loss=3.50297, wps=34243.8, ups=2, wpb=17141.1, bsz=188552, num_updates=4500, lr=0.00499876, gnorm=0.34, clip=0, loss_scale=0, train_wall=50, wall=2272
+2020-05-28 18:21:41 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.125
+2020-05-28 18:22:15 | INFO | train_inner | epoch 001:   4610 / 47753 loss=3.47537, wps=34456.6, ups=1.97, wpb=17522.8, bsz=192750, num_updates=4600, lr=0.0049987, gnorm=0.356, clip=0, loss_scale=0, train_wall=51, wall=2323
+2020-05-28 18:23:05 | INFO | train_inner | epoch 001:   4710 / 47753 loss=3.45514, wps=34835.7, ups=2.02, wpb=17284.3, bsz=190128, num_updates=4700, lr=0.00499864, gnorm=0.323, clip=0, loss_scale=0, train_wall=50, wall=2373
+2020-05-28 18:23:55 | INFO | train_inner | epoch 001:   4810 / 47753 loss=3.46492, wps=33754, ups=2, wpb=16886.3, bsz=185750, num_updates=4800, lr=0.00499857, gnorm=0.338, clip=0, loss_scale=0, train_wall=50, wall=2423
+2020-05-28 18:24:45 | INFO | train_inner | epoch 001:   4910 / 47753 loss=3.47372, wps=33964.8, ups=1.97, wpb=17199.5, bsz=189194, num_updates=4900, lr=0.0049985, gnorm=0.355, clip=0, loss_scale=0, train_wall=51, wall=2473
+2020-05-28 18:25:36 | INFO | train_inner | epoch 001:   5010 / 47753 loss=3.44204, wps=34423.1, ups=1.98, wpb=17344.7, bsz=190792, num_updates=5000, lr=0.00499844, gnorm=0.296, clip=0, loss_scale=0, train_wall=50, wall=2524
+2020-05-28 18:26:26 | INFO | train_inner | epoch 001:   5110 / 47753 loss=3.45228, wps=35075.1, ups=1.99, wpb=17641.6, bsz=194058, num_updates=5100, lr=0.00499836, gnorm=0.333, clip=0, loss_scale=0, train_wall=50, wall=2574
+2020-05-28 18:27:17 | INFO | train_inner | epoch 001:   5210 / 47753 loss=3.4396, wps=34224.4, ups=1.97, wpb=17336.5, bsz=190701, num_updates=5200, lr=0.00499829, gnorm=0.301, clip=0, loss_scale=0, train_wall=51, wall=2625
+2020-05-28 18:28:07 | INFO | train_inner | epoch 001:   5310 / 47753 loss=3.37148, wps=34384.5, ups=2, wpb=17213.2, bsz=189345, num_updates=5300, lr=0.00499822, gnorm=0.307, clip=0, loss_scale=0, train_wall=50, wall=2675
+2020-05-28 18:28:56 | INFO | train_inner | epoch 001:   5410 / 47753 loss=3.43528, wps=34896.5, ups=2.01, wpb=17344.6, bsz=190790, num_updates=5400, lr=0.00499814, gnorm=0.324, clip=0, loss_scale=0, train_wall=50, wall=2725
+2020-05-28 18:29:46 | INFO | train_inner | epoch 001:   5510 / 47753 loss=3.4012, wps=34442.4, ups=2.03, wpb=16941.8, bsz=186360, num_updates=5500, lr=0.00499807, gnorm=0.311, clip=0, loss_scale=0, train_wall=49, wall=2774
+2020-05-28 18:30:36 | INFO | train_inner | epoch 001:   5610 / 47753 loss=3.40718, wps=34522.1, ups=2, wpb=17257.6, bsz=189834, num_updates=5600, lr=0.00499799, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=2824
+2020-05-28 18:31:26 | INFO | train_inner | epoch 001:   5710 / 47753 loss=3.3662, wps=34261.5, ups=1.99, wpb=17198.3, bsz=189182, num_updates=5700, lr=0.00499791, gnorm=0.306, clip=0, loss_scale=0, train_wall=50, wall=2874
+2020-05-28 18:32:16 | INFO | train_inner | epoch 001:   5810 / 47753 loss=3.37698, wps=34947.2, ups=1.99, wpb=17593.9, bsz=193532, num_updates=5800, lr=0.00499783, gnorm=0.314, clip=0, loss_scale=0, train_wall=50, wall=2924
+2020-05-28 18:32:54 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.0625
+2020-05-28 18:33:07 | INFO | train_inner | epoch 001:   5911 / 47753 loss=3.3509, wps=34435.2, ups=1.97, wpb=17444.8, bsz=191893, num_updates=5900, lr=0.00499775, gnorm=0.315, clip=0, loss_scale=0, train_wall=51, wall=2975
+2020-05-28 18:33:56 | INFO | train_inner | epoch 001:   6011 / 47753 loss=3.3688, wps=35035.7, ups=2.01, wpb=17402.5, bsz=191427, num_updates=6000, lr=0.00499766, gnorm=0.317, clip=0, loss_scale=0, train_wall=50, wall=3025
+2020-05-28 18:34:47 | INFO | train_inner | epoch 001:   6111 / 47753 loss=3.34051, wps=34252.7, ups=1.99, wpb=17179.1, bsz=188970, num_updates=6100, lr=0.00499758, gnorm=0.343, clip=0, loss_scale=0, train_wall=50, wall=3075
+2020-05-28 18:35:37 | INFO | train_inner | epoch 001:   6211 / 47753 loss=3.33559, wps=34548.6, ups=2, wpb=17252.9, bsz=189782, num_updates=6200, lr=0.00499749, gnorm=0.308, clip=0, loss_scale=0, train_wall=50, wall=3125
+2020-05-28 18:36:26 | INFO | train_inner | epoch 001:   6311 / 47753 loss=3.34148, wps=34952, ups=2.01, wpb=17364.6, bsz=191011, num_updates=6300, lr=0.0049974, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=3174
+2020-05-28 18:37:16 | INFO | train_inner | epoch 001:   6411 / 47753 loss=3.36781, wps=34050.8, ups=2.02, wpb=16856.1, bsz=185417, num_updates=6400, lr=0.00499731, gnorm=0.325, clip=0, loss_scale=0, train_wall=49, wall=3224
+2020-05-28 18:38:06 | INFO | train_inner | epoch 001:   6511 / 47753 loss=3.33308, wps=34283.8, ups=2, wpb=17129.2, bsz=188421, num_updates=6500, lr=0.00499722, gnorm=0.303, clip=0, loss_scale=0, train_wall=50, wall=3274
+2020-05-28 18:38:56 | INFO | train_inner | epoch 001:   6611 / 47753 loss=3.33623, wps=34198.8, ups=2, wpb=17075.9, bsz=187835, num_updates=6600, lr=0.00499712, gnorm=0.331, clip=0, loss_scale=0, train_wall=50, wall=3324
+2020-05-28 18:39:45 | INFO | train_inner | epoch 001:   6711 / 47753 loss=3.34349, wps=34433.8, ups=2.01, wpb=17097.4, bsz=188072, num_updates=6700, lr=0.00499703, gnorm=0.338, clip=0, loss_scale=0, train_wall=50, wall=3373
+2020-05-28 18:40:35 | INFO | train_inner | epoch 001:   6811 / 47753 loss=3.3208, wps=34557, ups=2, wpb=17275.8, bsz=190034, num_updates=6800, lr=0.00499693, gnorm=0.297, clip=0, loss_scale=0, train_wall=50, wall=3423
+2020-05-28 18:41:25 | INFO | train_inner | epoch 001:   6911 / 47753 loss=3.31762, wps=34754.7, ups=2.01, wpb=17252.9, bsz=189782, num_updates=6900, lr=0.00499684, gnorm=0.334, clip=0, loss_scale=0, train_wall=50, wall=3473
+2020-05-28 18:42:15 | INFO | train_inner | epoch 001:   7011 / 47753 loss=3.29662, wps=34799.6, ups=2.01, wpb=17292.1, bsz=190213, num_updates=7000, lr=0.00499674, gnorm=0.311, clip=0, loss_scale=0, train_wall=50, wall=3523
+2020-05-28 18:43:05 | INFO | train_inner | epoch 001:   7111 / 47753 loss=3.32486, wps=34227.4, ups=2, wpb=17081.3, bsz=187894, num_updates=7100, lr=0.00499663, gnorm=0.317, clip=0, loss_scale=0, train_wall=50, wall=3573
+2020-05-28 18:43:55 | INFO | train_inner | epoch 001:   7211 / 47753 loss=3.26104, wps=34434.1, ups=1.97, wpb=17471.4, bsz=192185, num_updates=7200, lr=0.00499653, gnorm=0.324, clip=0, loss_scale=0, train_wall=51, wall=3623
+2020-05-28 18:44:46 | INFO | train_inner | epoch 001:   7311 / 47753 loss=3.25504, wps=34337.6, ups=1.97, wpb=17390.8, bsz=191298, num_updates=7300, lr=0.00499643, gnorm=0.316, clip=0, loss_scale=0, train_wall=51, wall=3674
+2020-05-28 18:45:36 | INFO | train_inner | epoch 001:   7411 / 47753 loss=3.28492, wps=34659.4, ups=1.98, wpb=17510.5, bsz=192615, num_updates=7400, lr=0.00499632, gnorm=0.309, clip=0, loss_scale=0, train_wall=50, wall=3725
+2020-05-28 18:46:27 | INFO | train_inner | epoch 001:   7511 / 47753 loss=3.2849, wps=34480.9, ups=1.98, wpb=17418.3, bsz=191601, num_updates=7500, lr=0.00499621, gnorm=0.311, clip=0, loss_scale=0, train_wall=50, wall=3775
+2020-05-28 18:47:17 | INFO | train_inner | epoch 001:   7611 / 47753 loss=3.30336, wps=34617.6, ups=1.98, wpb=17495.5, bsz=192451, num_updates=7600, lr=0.00499611, gnorm=0.3, clip=0, loss_scale=0, train_wall=50, wall=3826
+2020-05-28 18:48:07 | INFO | train_inner | epoch 001:   7711 / 47753 loss=3.2623, wps=34678.8, ups=2.02, wpb=17181.3, bsz=188994, num_updates=7700, lr=0.00499599, gnorm=0.326, clip=0, loss_scale=0, train_wall=49, wall=3875
+2020-05-28 18:48:56 | INFO | train_inner | epoch 001:   7811 / 47753 loss=3.25639, wps=34886.2, ups=2.02, wpb=17240.2, bsz=189642, num_updates=7800, lr=0.00499588, gnorm=0.32, clip=0, loss_scale=0, train_wall=49, wall=3925
+2020-05-28 18:49:47 | INFO | train_inner | epoch 001:   7911 / 47753 loss=3.26362, wps=34303.7, ups=1.99, wpb=17208.2, bsz=189290, num_updates=7900, lr=0.00499577, gnorm=0.321, clip=0, loss_scale=0, train_wall=50, wall=3975
+2020-05-28 18:50:37 | INFO | train_inner | epoch 001:   8011 / 47753 loss=3.26314, wps=34826.7, ups=1.99, wpb=17490.5, bsz=192396, num_updates=8000, lr=0.00499565, gnorm=0.324, clip=0, loss_scale=0, train_wall=50, wall=4025
+2020-05-28 18:51:27 | INFO | train_inner | epoch 001:   8111 / 47753 loss=3.26854, wps=35176.7, ups=2, wpb=17621.6, bsz=193837, num_updates=8100, lr=0.00499554, gnorm=0.31, clip=0, loss_scale=0, train_wall=50, wall=4075
+2020-05-28 18:52:17 | INFO | train_inner | epoch 001:   8211 / 47753 loss=3.25938, wps=34945.3, ups=1.99, wpb=17550.9, bsz=193060, num_updates=8200, lr=0.00499542, gnorm=0.321, clip=0, loss_scale=0, train_wall=50, wall=4125
+2020-05-28 18:53:07 | INFO | train_inner | epoch 001:   8311 / 47753 loss=3.26057, wps=34921.5, ups=1.99, wpb=17560.9, bsz=193170, num_updates=8300, lr=0.0049953, gnorm=0.295, clip=0, loss_scale=0, train_wall=50, wall=4176
+2020-05-28 18:53:57 | INFO | train_inner | epoch 001:   8411 / 47753 loss=3.24639, wps=34533.4, ups=2.01, wpb=17178.8, bsz=188967, num_updates=8400, lr=0.00499518, gnorm=0.314, clip=0, loss_scale=0, train_wall=50, wall=4225
+2020-05-28 18:54:47 | INFO | train_inner | epoch 001:   8511 / 47753 loss=3.23565, wps=34576, ups=2.01, wpb=17203.4, bsz=189238, num_updates=8500, lr=0.00499506, gnorm=0.299, clip=0, loss_scale=0, train_wall=50, wall=4275
+2020-05-28 18:55:38 | INFO | train_inner | epoch 001:   8611 / 47753 loss=3.20639, wps=34653.1, ups=1.97, wpb=17546.5, bsz=193012, num_updates=8600, lr=0.00499493, gnorm=0.321, clip=0, loss_scale=0, train_wall=51, wall=4326
+2020-05-28 18:56:27 | INFO | train_inner | epoch 001:   8711 / 47753 loss=3.2036, wps=34713.8, ups=2, wpb=17324.8, bsz=190572, num_updates=8700, lr=0.00499481, gnorm=0.323, clip=0, loss_scale=0, train_wall=50, wall=4376
+2020-05-28 18:57:17 | INFO | train_inner | epoch 001:   8811 / 47753 loss=3.22449, wps=34525, ups=2.03, wpb=16978.5, bsz=186764, num_updates=8800, lr=0.00499468, gnorm=0.308, clip=0, loss_scale=0, train_wall=49, wall=4425
+2020-05-28 18:58:06 | INFO | train_inner | epoch 001:   8911 / 47753 loss=3.1969, wps=35015.6, ups=2.02, wpb=17306.1, bsz=190367, num_updates=8900, lr=0.00499455, gnorm=0.318, clip=0, loss_scale=0, train_wall=49, wall=4474
+2020-05-28 18:58:56 | INFO | train_inner | epoch 001:   9011 / 47753 loss=3.20258, wps=33959.8, ups=2, wpb=17003.9, bsz=187043, num_updates=9000, lr=0.00499442, gnorm=0.326, clip=0, loss_scale=0, train_wall=50, wall=4524
+2020-05-28 18:59:46 | INFO | train_inner | epoch 001:   9111 / 47753 loss=3.19603, wps=34470.9, ups=1.99, wpb=17298.8, bsz=190287, num_updates=9100, lr=0.00499429, gnorm=0.312, clip=0, loss_scale=0, train_wall=50, wall=4574
+2020-05-28 19:00:36 | INFO | train_inner | epoch 001:   9211 / 47753 loss=3.2207, wps=34588.2, ups=2.01, wpb=17197.4, bsz=189172, num_updates=9200, lr=0.00499415, gnorm=0.318, clip=0, loss_scale=0, train_wall=50, wall=4624
+2020-05-28 19:01:26 | INFO | train_inner | epoch 001:   9311 / 47753 loss=3.18575, wps=34494.1, ups=2.01, wpb=17190.4, bsz=189095, num_updates=9300, lr=0.00499402, gnorm=0.295, clip=0, loss_scale=0, train_wall=50, wall=4674
+2020-05-28 19:02:16 | INFO | train_inner | epoch 001:   9411 / 47753 loss=3.18172, wps=34515.8, ups=2.01, wpb=17131.3, bsz=188444, num_updates=9400, lr=0.00499388, gnorm=0.321, clip=0, loss_scale=0, train_wall=50, wall=4724
+2020-05-28 19:03:06 | INFO | train_inner | epoch 001:   9511 / 47753 loss=3.25368, wps=34003.9, ups=1.99, wpb=17068.1, bsz=187750, num_updates=9500, lr=0.00499374, gnorm=0.321, clip=0, loss_scale=0, train_wall=50, wall=4774
+2020-05-28 19:03:56 | INFO | train_inner | epoch 001:   9611 / 47753 loss=3.1924, wps=34364.5, ups=1.99, wpb=17289.4, bsz=190183, num_updates=9600, lr=0.0049936, gnorm=0.32, clip=0, loss_scale=0, train_wall=50, wall=4824
+2020-05-28 19:04:46 | INFO | train_inner | epoch 001:   9711 / 47753 loss=3.18577, wps=34942.9, ups=2.02, wpb=17331.4, bsz=190646, num_updates=9700, lr=0.00499346, gnorm=0.303, clip=0, loss_scale=0, train_wall=50, wall=4874
+2020-05-28 19:05:35 | INFO | train_inner | epoch 001:   9811 / 47753 loss=3.17192, wps=34638.1, ups=2.03, wpb=17076.8, bsz=187845, num_updates=9800, lr=0.00499332, gnorm=0.329, clip=0, loss_scale=0, train_wall=49, wall=4923
+2020-05-28 19:06:25 | INFO | train_inner | epoch 001:   9911 / 47753 loss=3.17731, wps=34720, ups=2.02, wpb=17228, bsz=189508, num_updates=9900, lr=0.00499317, gnorm=0.306, clip=0, loss_scale=0, train_wall=50, wall=4973
+2020-05-28 19:07:15 | INFO | train_inner | epoch 001:  10011 / 47753 loss=3.20218, wps=34842.4, ups=1.98, wpb=17599.5, bsz=193594, num_updates=10000, lr=0.00499303, gnorm=0.328, clip=0, loss_scale=0, train_wall=50, wall=5023
+2020-05-28 19:08:05 | INFO | train_inner | epoch 001:  10111 / 47753 loss=3.18823, wps=34653.3, ups=2, wpb=17343.5, bsz=190779, num_updates=10100, lr=0.00499288, gnorm=0.323, clip=0, loss_scale=0, train_wall=50, wall=5073
+2020-05-28 19:08:55 | INFO | train_inner | epoch 001:  10211 / 47753 loss=3.15848, wps=34347.3, ups=2, wpb=17169.5, bsz=188864, num_updates=10200, lr=0.00499273, gnorm=0.313, clip=0, loss_scale=0, train_wall=50, wall=5123
+2020-05-28 19:09:45 | INFO | train_inner | epoch 001:  10311 / 47753 loss=3.19507, wps=34523, ups=2, wpb=17279.9, bsz=190079, num_updates=10300, lr=0.00499258, gnorm=0.336, clip=0, loss_scale=0, train_wall=50, wall=5173
+2020-05-28 19:10:35 | INFO | train_inner | epoch 001:  10411 / 47753 loss=3.15648, wps=35071.2, ups=2.01, wpb=17472.8, bsz=192201, num_updates=10400, lr=0.00499243, gnorm=0.315, clip=0, loss_scale=0, train_wall=50, wall=5223
+2020-05-28 19:11:25 | INFO | train_inner | epoch 001:  10511 / 47753 loss=3.1564, wps=34827.6, ups=2.01, wpb=17366, bsz=191026, num_updates=10500, lr=0.00499228, gnorm=0.311, clip=0, loss_scale=0, train_wall=50, wall=5273
+2020-05-28 19:12:15 | INFO | train_inner | epoch 001:  10611 / 47753 loss=3.16968, wps=34612.5, ups=1.99, wpb=17427.7, bsz=191704, num_updates=10600, lr=0.00499212, gnorm=0.312, clip=0, loss_scale=0, train_wall=50, wall=5323
+2020-05-28 19:13:05 | INFO | train_inner | epoch 001:  10711 / 47753 loss=3.15886, wps=34503.5, ups=2, wpb=17268.7, bsz=189956, num_updates=10700, lr=0.00499196, gnorm=0.324, clip=0, loss_scale=0, train_wall=50, wall=5373
+2020-05-28 19:13:55 | INFO | train_inner | epoch 001:  10811 / 47753 loss=3.17418, wps=34353.2, ups=2.03, wpb=16955.5, bsz=186511, num_updates=10800, lr=0.00499181, gnorm=0.311, clip=0, loss_scale=0, train_wall=49, wall=5423
+2020-05-28 19:14:44 | INFO | train_inner | epoch 001:  10911 / 47753 loss=3.15184, wps=33731.7, ups=2.02, wpb=16709.1, bsz=183800, num_updates=10900, lr=0.00499165, gnorm=0.357, clip=0, loss_scale=0, train_wall=49, wall=5472
+2020-05-28 19:15:34 | INFO | train_inner | epoch 001:  11011 / 47753 loss=3.15878, wps=34660.9, ups=2, wpb=17337, bsz=190707, num_updates=11000, lr=0.00499148, gnorm=0.32, clip=0, loss_scale=0, train_wall=50, wall=5522
+2020-05-28 19:16:23 | INFO | train_inner | epoch 001:  11111 / 47753 loss=3.14752, wps=34695.4, ups=2.03, wpb=17066.8, bsz=187734, num_updates=11100, lr=0.00499132, gnorm=0.302, clip=0, loss_scale=0, train_wall=49, wall=5571
+2020-05-28 19:17:14 | INFO | train_inner | epoch 001:  11211 / 47753 loss=3.17188, wps=34401.1, ups=1.99, wpb=17310.3, bsz=190413, num_updates=11200, lr=0.00499116, gnorm=0.346, clip=0, loss_scale=0, train_wall=50, wall=5622
+2020-05-28 19:18:05 | INFO | train_inner | epoch 001:  11311 / 47753 loss=3.14836, wps=33637.5, ups=1.95, wpb=17260.9, bsz=189870, num_updates=11300, lr=0.00499099, gnorm=0.32, clip=0, loss_scale=0, train_wall=51, wall=5673
+2020-05-28 19:18:55 | INFO | train_inner | epoch 001:  11411 / 47753 loss=3.11949, wps=34439.3, ups=2.01, wpb=17158.1, bsz=188739, num_updates=11400, lr=0.00499082, gnorm=0.303, clip=0, loss_scale=0, train_wall=50, wall=5723
+2020-05-28 19:19:45 | INFO | train_inner | epoch 001:  11511 / 47753 loss=3.14118, wps=34792.7, ups=1.99, wpb=17458.4, bsz=192042, num_updates=11500, lr=0.00499065, gnorm=0.321, clip=0, loss_scale=0, train_wall=50, wall=5773
+2020-05-28 19:20:35 | INFO | train_inner | epoch 001:  11611 / 47753 loss=3.15789, wps=34505.1, ups=1.99, wpb=17338.4, bsz=190722, num_updates=11600, lr=0.00499048, gnorm=0.343, clip=0, loss_scale=0, train_wall=50, wall=5823
+2020-05-28 19:21:25 | INFO | train_inner | epoch 001:  11711 / 47753 loss=3.12638, wps=34673.8, ups=2.01, wpb=17291.3, bsz=190205, num_updates=11700, lr=0.00499031, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=5873
+2020-05-28 19:22:15 | INFO | train_inner | epoch 001:  11811 / 47753 loss=3.13362, wps=34337.6, ups=2.01, wpb=17048.7, bsz=187536, num_updates=11800, lr=0.00499014, gnorm=0.326, clip=0, loss_scale=0, train_wall=50, wall=5923
+2020-05-28 19:23:05 | INFO | train_inner | epoch 001:  11911 / 47753 loss=3.09692, wps=34317.7, ups=1.99, wpb=17246.6, bsz=189713, num_updates=11900, lr=0.00498996, gnorm=0.324, clip=0, loss_scale=0, train_wall=50, wall=5973
+2020-05-28 19:23:55 | INFO | train_inner | epoch 001:  12011 / 47753 loss=3.11365, wps=34624, ups=2.01, wpb=17213.4, bsz=189347, num_updates=12000, lr=0.00498979, gnorm=0.323, clip=0, loss_scale=0, train_wall=50, wall=6023
+2020-05-28 19:24:44 | INFO | train_inner | epoch 001:  12111 / 47753 loss=3.14686, wps=34835.4, ups=2.03, wpb=17184.2, bsz=189027, num_updates=12100, lr=0.00498961, gnorm=0.317, clip=0, loss_scale=0, train_wall=49, wall=6072
+2020-05-28 19:25:34 | INFO | train_inner | epoch 001:  12211 / 47753 loss=3.1197, wps=34443.7, ups=2.01, wpb=17131.7, bsz=188449, num_updates=12200, lr=0.00498943, gnorm=0.327, clip=0, loss_scale=0, train_wall=50, wall=6122
+2020-05-28 19:26:24 | INFO | train_inner | epoch 001:  12311 / 47753 loss=3.10159, wps=35185.3, ups=2.01, wpb=17542, bsz=192962, num_updates=12300, lr=0.00498925, gnorm=0.322, clip=0, loss_scale=0, train_wall=50, wall=6172
+2020-05-28 19:27:13 | INFO | train_inner | epoch 001:  12411 / 47753 loss=3.13326, wps=34374.9, ups=2.01, wpb=17094.2, bsz=188037, num_updates=12400, lr=0.00498906, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=6221
+2020-05-28 19:28:03 | INFO | train_inner | epoch 001:  12511 / 47753 loss=3.11272, wps=34955.4, ups=2, wpb=17503.2, bsz=192535, num_updates=12500, lr=0.00498888, gnorm=0.314, clip=0, loss_scale=0, train_wall=50, wall=6272
+2020-05-28 19:28:54 | INFO | train_inner | epoch 001:  12611 / 47753 loss=3.13132, wps=34762.8, ups=1.99, wpb=17494.7, bsz=192442, num_updates=12600, lr=0.00498869, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=6322
+2020-05-28 19:29:44 | INFO | train_inner | epoch 001:  12711 / 47753 loss=3.11948, wps=34722.3, ups=1.99, wpb=17446.3, bsz=191909, num_updates=12700, lr=0.00498851, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=6372
+2020-05-28 19:30:35 | INFO | train_inner | epoch 001:  12811 / 47753 loss=3.11348, wps=34423, ups=1.97, wpb=17469.2, bsz=192161, num_updates=12800, lr=0.00498832, gnorm=0.34, clip=0, loss_scale=0, train_wall=51, wall=6423
+2020-05-28 19:31:25 | INFO | train_inner | epoch 001:  12911 / 47753 loss=3.08699, wps=34048.5, ups=2, wpb=16990.9, bsz=186900, num_updates=12900, lr=0.00498813, gnorm=0.335, clip=0, loss_scale=0, train_wall=50, wall=6473
+2020-05-28 19:32:15 | INFO | train_inner | epoch 001:  13011 / 47753 loss=3.08307, wps=34723.3, ups=2, wpb=17369.5, bsz=191064, num_updates=13000, lr=0.00498793, gnorm=0.316, clip=0, loss_scale=0, train_wall=50, wall=6523
+2020-05-28 19:33:05 | INFO | train_inner | epoch 001:  13111 / 47753 loss=3.08048, wps=34812.3, ups=1.99, wpb=17497.6, bsz=192473, num_updates=13100, lr=0.00498774, gnorm=0.322, clip=0, loss_scale=0, train_wall=50, wall=6573
+2020-05-28 19:33:55 | INFO | train_inner | epoch 001:  13211 / 47753 loss=3.07674, wps=34066.4, ups=1.99, wpb=17136.7, bsz=188504, num_updates=13200, lr=0.00498755, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=6623
+2020-05-28 19:34:45 | INFO | train_inner | epoch 001:  13311 / 47753 loss=3.08656, wps=34249.7, ups=2.01, wpb=17059.8, bsz=187658, num_updates=13300, lr=0.00498735, gnorm=0.323, clip=0, loss_scale=0, train_wall=50, wall=6673
+2020-05-28 19:35:36 | INFO | train_inner | epoch 001:  13411 / 47753 loss=3.06221, wps=34884.3, ups=1.98, wpb=17621.2, bsz=193833, num_updates=13400, lr=0.00498715, gnorm=0.314, clip=0, loss_scale=0, train_wall=50, wall=6724
+2020-05-28 19:36:26 | INFO | train_inner | epoch 001:  13511 / 47753 loss=3.10109, wps=35130, ups=1.99, wpb=17632.9, bsz=193962, num_updates=13500, lr=0.00498695, gnorm=0.317, clip=0, loss_scale=0, train_wall=50, wall=6774
+2020-05-28 19:37:15 | INFO | train_inner | epoch 001:  13611 / 47753 loss=3.10253, wps=34424.8, ups=2.04, wpb=16865, bsz=185515, num_updates=13600, lr=0.00498675, gnorm=0.303, clip=0, loss_scale=0, train_wall=49, wall=6823
+2020-05-28 19:38:04 | INFO | train_inner | epoch 001:  13711 / 47753 loss=3.05653, wps=34724.1, ups=2.02, wpb=17211.2, bsz=189323, num_updates=13700, lr=0.00498655, gnorm=0.34, clip=0, loss_scale=0, train_wall=49, wall=6872
+2020-05-28 19:38:54 | INFO | train_inner | epoch 001:  13811 / 47753 loss=3.08059, wps=33947.5, ups=2.01, wpb=16855.9, bsz=185414, num_updates=13800, lr=0.00498634, gnorm=0.356, clip=0, loss_scale=0, train_wall=50, wall=6922
+2020-05-28 19:39:43 | INFO | train_inner | epoch 001:  13911 / 47753 loss=3.07596, wps=34912.6, ups=2.02, wpb=17276, bsz=190036, num_updates=13900, lr=0.00498614, gnorm=0.336, clip=0, loss_scale=0, train_wall=49, wall=6972
+2020-05-28 19:40:33 | INFO | train_inner | epoch 001:  14011 / 47753 loss=3.08322, wps=34823.2, ups=2.01, wpb=17350.7, bsz=190858, num_updates=14000, lr=0.00498593, gnorm=0.36, clip=0, loss_scale=0, train_wall=50, wall=7021
+2020-05-28 19:41:23 | INFO | train_inner | epoch 001:  14111 / 47753 loss=3.10306, wps=34185.7, ups=2, wpb=17095.5, bsz=188050, num_updates=14100, lr=0.00498572, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=7071
+2020-05-28 19:42:13 | INFO | train_inner | epoch 001:  14211 / 47753 loss=3.06588, wps=34363.1, ups=2.01, wpb=17124.2, bsz=188367, num_updates=14200, lr=0.00498551, gnorm=0.316, clip=0, loss_scale=0, train_wall=50, wall=7121
+2020-05-28 19:43:03 | INFO | train_inner | epoch 001:  14311 / 47753 loss=3.05608, wps=34427.6, ups=2.01, wpb=17140.4, bsz=188544, num_updates=14300, lr=0.0049853, gnorm=0.316, clip=0, loss_scale=0, train_wall=50, wall=7171
+2020-05-28 19:43:53 | INFO | train_inner | epoch 001:  14411 / 47753 loss=3.08024, wps=34469.3, ups=2.01, wpb=17133.8, bsz=188472, num_updates=14400, lr=0.00498508, gnorm=0.337, clip=0, loss_scale=0, train_wall=50, wall=7221
+2020-05-28 19:44:42 | INFO | train_inner | epoch 001:  14511 / 47753 loss=3.03759, wps=34679.6, ups=2.01, wpb=17230.3, bsz=189533, num_updates=14500, lr=0.00498487, gnorm=0.321, clip=0, loss_scale=0, train_wall=50, wall=7270
+2020-05-28 19:45:32 | INFO | train_inner | epoch 001:  14611 / 47753 loss=3.04189, wps=35132.2, ups=2, wpb=17578.3, bsz=193362, num_updates=14600, lr=0.00498465, gnorm=0.326, clip=0, loss_scale=0, train_wall=50, wall=7320
+2020-05-28 19:46:23 | INFO | train_inner | epoch 001:  14711 / 47753 loss=3.04688, wps=34446.4, ups=1.99, wpb=17271.5, bsz=189987, num_updates=14700, lr=0.00498443, gnorm=0.317, clip=0, loss_scale=0, train_wall=50, wall=7371
+2020-05-28 19:47:12 | INFO | train_inner | epoch 001:  14811 / 47753 loss=3.02455, wps=34500.4, ups=2.02, wpb=17108.5, bsz=188194, num_updates=14800, lr=0.00498421, gnorm=0.318, clip=0, loss_scale=0, train_wall=50, wall=7420
+2020-05-28 19:48:02 | INFO | train_inner | epoch 001:  14911 / 47753 loss=3.00587, wps=34612.6, ups=2.01, wpb=17189.8, bsz=189088, num_updates=14900, lr=0.00498399, gnorm=0.308, clip=0, loss_scale=0, train_wall=50, wall=7470
+2020-05-28 19:48:51 | INFO | train_inner | epoch 001:  15011 / 47753 loss=3.06762, wps=34354.7, ups=2.02, wpb=17002.9, bsz=187032, num_updates=15000, lr=0.00498377, gnorm=0.324, clip=0, loss_scale=0, train_wall=49, wall=7519
+2020-05-28 19:49:11 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.0625
+2020-05-28 19:49:41 | INFO | train_inner | epoch 001:  15112 / 47753 loss=3.04554, wps=33851.4, ups=1.99, wpb=16986.6, bsz=186853, num_updates=15100, lr=0.00498354, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=7570
+2020-05-28 19:50:31 | INFO | train_inner | epoch 001:  15212 / 47753 loss=3.02897, wps=34483.5, ups=2.02, wpb=17111.3, bsz=188224, num_updates=15200, lr=0.00498332, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=7619
+2020-05-28 19:51:22 | INFO | train_inner | epoch 001:  15312 / 47753 loss=3.01612, wps=34349.6, ups=1.98, wpb=17338, bsz=190718, num_updates=15300, lr=0.00498309, gnorm=0.309, clip=0, loss_scale=0, train_wall=50, wall=7670
+2020-05-28 19:52:12 | INFO | train_inner | epoch 001:  15412 / 47753 loss=3.0643, wps=34287.9, ups=1.97, wpb=17412.7, bsz=191539, num_updates=15400, lr=0.00498286, gnorm=0.338, clip=0, loss_scale=0, train_wall=51, wall=7720
+2020-05-28 19:53:03 | INFO | train_inner | epoch 001:  15512 / 47753 loss=3.03747, wps=33552.2, ups=1.99, wpb=16865.5, bsz=185521, num_updates=15500, lr=0.00498263, gnorm=0.347, clip=0, loss_scale=0, train_wall=50, wall=7771
+2020-05-28 19:53:52 | INFO | train_inner | epoch 001:  15612 / 47753 loss=3.0289, wps=34532.4, ups=2.02, wpb=17133.5, bsz=188469, num_updates=15600, lr=0.0049824, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=7820
+2020-05-28 19:54:42 | INFO | train_inner | epoch 001:  15712 / 47753 loss=3.01756, wps=34722.4, ups=2.01, wpb=17302, bsz=190322, num_updates=15700, lr=0.00498217, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=7870
+2020-05-28 19:55:33 | INFO | train_inner | epoch 001:  15812 / 47753 loss=3.02826, wps=34138.7, ups=1.97, wpb=17305.2, bsz=190357, num_updates=15800, lr=0.00498193, gnorm=0.338, clip=0, loss_scale=0, train_wall=51, wall=7921
+2020-05-28 19:56:22 | INFO | train_inner | epoch 001:  15912 / 47753 loss=3.01914, wps=34495.7, ups=2.02, wpb=17103.5, bsz=188139, num_updates=15900, lr=0.00498169, gnorm=0.321, clip=0, loss_scale=0, train_wall=49, wall=7970
+2020-05-28 19:57:12 | INFO | train_inner | epoch 001:  16012 / 47753 loss=3.0351, wps=35103.4, ups=2.02, wpb=17363.9, bsz=191003, num_updates=16000, lr=0.00498146, gnorm=0.327, clip=0, loss_scale=0, train_wall=49, wall=8020
+2020-05-28 19:58:02 | INFO | train_inner | epoch 001:  16112 / 47753 loss=3.02825, wps=33755.2, ups=1.98, wpb=17050.1, bsz=187552, num_updates=16100, lr=0.00498122, gnorm=0.337, clip=0, loss_scale=0, train_wall=50, wall=8070
+2020-05-28 19:58:53 | INFO | train_inner | epoch 001:  16212 / 47753 loss=3.00718, wps=34381.4, ups=1.98, wpb=17335.7, bsz=190692, num_updates=16200, lr=0.00498097, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=8121
+2020-05-28 19:59:43 | INFO | train_inner | epoch 001:  16312 / 47753 loss=3.01212, wps=34275.9, ups=1.97, wpb=17366.5, bsz=191032, num_updates=16300, lr=0.00498073, gnorm=0.332, clip=0, loss_scale=0, train_wall=51, wall=8171
+2020-05-28 20:00:33 | INFO | train_inner | epoch 001:  16412 / 47753 loss=3.01827, wps=35250, ups=2, wpb=17628.3, bsz=193911, num_updates=16400, lr=0.00498049, gnorm=0.342, clip=0, loss_scale=0, train_wall=50, wall=8221
+2020-05-28 20:01:24 | INFO | train_inner | epoch 001:  16512 / 47753 loss=3.04184, wps=34248.7, ups=2, wpb=17166.7, bsz=188834, num_updates=16500, lr=0.00498024, gnorm=0.339, clip=0, loss_scale=0, train_wall=50, wall=8272
+2020-05-28 20:02:13 | INFO | train_inner | epoch 001:  16612 / 47753 loss=3.0236, wps=34113.8, ups=2, wpb=17015.6, bsz=187171, num_updates=16600, lr=0.00497999, gnorm=0.341, clip=0, loss_scale=0, train_wall=50, wall=8321
+2020-05-28 20:03:03 | INFO | train_inner | epoch 001:  16712 / 47753 loss=2.9935, wps=34709.4, ups=2, wpb=17342.8, bsz=190771, num_updates=16700, lr=0.00497975, gnorm=0.34, clip=0, loss_scale=0, train_wall=50, wall=8371
+2020-05-28 20:03:54 | INFO | train_inner | epoch 001:  16812 / 47753 loss=2.99502, wps=34720.6, ups=1.98, wpb=17535.2, bsz=192887, num_updates=16800, lr=0.00497949, gnorm=0.327, clip=0, loss_scale=0, train_wall=50, wall=8422
+2020-05-28 20:04:44 | INFO | train_inner | epoch 001:  16912 / 47753 loss=3.04319, wps=34346, ups=1.99, wpb=17275, bsz=190025, num_updates=16900, lr=0.00497924, gnorm=0.32, clip=0, loss_scale=0, train_wall=50, wall=8472
+2020-05-28 20:05:34 | INFO | train_inner | epoch 001:  17012 / 47753 loss=2.98433, wps=34861.4, ups=2, wpb=17440.3, bsz=191843, num_updates=17000, lr=0.00497899, gnorm=0.316, clip=0, loss_scale=0, train_wall=50, wall=8522
+2020-05-28 20:06:25 | INFO | train_inner | epoch 001:  17112 / 47753 loss=3.00205, wps=34233.6, ups=1.99, wpb=17241.4, bsz=189655, num_updates=17100, lr=0.00497873, gnorm=0.363, clip=0, loss_scale=0, train_wall=50, wall=8573
+2020-05-28 20:07:14 | INFO | train_inner | epoch 001:  17212 / 47753 loss=2.97862, wps=34893, ups=2.01, wpb=17372.9, bsz=191102, num_updates=17200, lr=0.00497848, gnorm=0.321, clip=0, loss_scale=0, train_wall=50, wall=8622
+2020-05-28 20:08:05 | INFO | train_inner | epoch 001:  17312 / 47753 loss=2.96304, wps=34922, ups=1.98, wpb=17609.2, bsz=193701, num_updates=17300, lr=0.00497822, gnorm=0.323, clip=0, loss_scale=0, train_wall=50, wall=8673
+2020-05-28 20:08:54 | INFO | train_inner | epoch 001:  17412 / 47753 loss=2.98299, wps=34647.4, ups=2.01, wpb=17228.9, bsz=189518, num_updates=17400, lr=0.00497796, gnorm=0.356, clip=0, loss_scale=0, train_wall=50, wall=8723
+2020-05-28 20:09:44 | INFO | train_inner | epoch 001:  17512 / 47753 loss=2.97386, wps=34615, ups=2.01, wpb=17260.6, bsz=189866, num_updates=17500, lr=0.0049777, gnorm=0.329, clip=0, loss_scale=0, train_wall=50, wall=8772
+2020-05-28 20:10:34 | INFO | train_inner | epoch 001:  17612 / 47753 loss=3.00139, wps=34950.5, ups=2.02, wpb=17293.7, bsz=190230, num_updates=17600, lr=0.00497744, gnorm=0.35, clip=0, loss_scale=0, train_wall=49, wall=8822
+2020-05-28 20:11:24 | INFO | train_inner | epoch 001:  17712 / 47753 loss=2.99335, wps=34592.2, ups=1.98, wpb=17512.5, bsz=192638, num_updates=17700, lr=0.00497717, gnorm=0.373, clip=0, loss_scale=0, train_wall=51, wall=8873
+2020-05-28 20:12:15 | INFO | train_inner | epoch 001:  17812 / 47753 loss=3.03381, wps=33853.8, ups=1.98, wpb=17132.5, bsz=188457, num_updates=17800, lr=0.00497691, gnorm=0.346, clip=0, loss_scale=0, train_wall=51, wall=8923
+2020-05-28 20:13:05 | INFO | train_inner | epoch 001:  17912 / 47753 loss=3.01667, wps=34916.6, ups=2.01, wpb=17393.5, bsz=191328, num_updates=17900, lr=0.00497664, gnorm=0.333, clip=0, loss_scale=0, train_wall=50, wall=8973
+2020-05-28 20:13:55 | INFO | train_inner | epoch 001:  18012 / 47753 loss=2.96574, wps=34416.7, ups=1.99, wpb=17278.3, bsz=190062, num_updates=18000, lr=0.00497637, gnorm=0.328, clip=0, loss_scale=0, train_wall=50, wall=9023
+2020-05-28 20:14:45 | INFO | train_inner | epoch 001:  18112 / 47753 loss=2.96428, wps=34733, ups=2, wpb=17388.9, bsz=191278, num_updates=18100, lr=0.0049761, gnorm=0.327, clip=0, loss_scale=0, train_wall=50, wall=9073
+2020-05-28 20:15:34 | INFO | train_inner | epoch 001:  18212 / 47753 loss=2.99172, wps=34196.9, ups=2.05, wpb=16663.8, bsz=183302, num_updates=18200, lr=0.00497583, gnorm=0.349, clip=0, loss_scale=0, train_wall=49, wall=9122
+2020-05-28 20:16:24 | INFO | train_inner | epoch 001:  18312 / 47753 loss=2.95759, wps=34826, ups=1.99, wpb=17470.1, bsz=192171, num_updates=18300, lr=0.00497555, gnorm=0.365, clip=0, loss_scale=0, train_wall=50, wall=9172
+2020-05-28 20:17:14 | INFO | train_inner | epoch 001:  18412 / 47753 loss=2.96089, wps=34626.3, ups=2.01, wpb=17198.6, bsz=189184, num_updates=18400, lr=0.00497528, gnorm=0.315, clip=0, loss_scale=0, train_wall=50, wall=9222
+2020-05-28 20:18:04 | INFO | train_inner | epoch 001:  18512 / 47753 loss=2.96572, wps=34864.5, ups=2, wpb=17472.1, bsz=192193, num_updates=18500, lr=0.004975, gnorm=0.336, clip=0, loss_scale=0, train_wall=50, wall=9272
+2020-05-28 20:18:53 | INFO | train_inner | epoch 001:  18612 / 47753 loss=2.95935, wps=34635.7, ups=2.04, wpb=17004, bsz=187044, num_updates=18600, lr=0.00497472, gnorm=0.34, clip=0, loss_scale=0, train_wall=49, wall=9321
+2020-05-28 20:19:43 | INFO | train_inner | epoch 001:  18712 / 47753 loss=2.99682, wps=34417.6, ups=1.98, wpb=17391.1, bsz=191302, num_updates=18700, lr=0.00497444, gnorm=0.336, clip=0, loss_scale=0, train_wall=50, wall=9372
+2020-05-28 20:20:34 | INFO | train_inner | epoch 001:  18812 / 47753 loss=2.97263, wps=34523.8, ups=2, wpb=17298.1, bsz=190279, num_updates=18800, lr=0.00497416, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=9422
+2020-05-28 20:21:23 | INFO | train_inner | epoch 001:  18912 / 47753 loss=2.95605, wps=34723.2, ups=2.02, wpb=17154.3, bsz=188697, num_updates=18900, lr=0.00497388, gnorm=0.36, clip=0, loss_scale=0, train_wall=49, wall=9471
+2020-05-28 20:22:13 | INFO | train_inner | epoch 001:  19012 / 47753 loss=2.95301, wps=34839.6, ups=2.02, wpb=17289.2, bsz=190182, num_updates=19000, lr=0.0049736, gnorm=0.361, clip=0, loss_scale=0, train_wall=50, wall=9521
+2020-05-28 20:23:03 | INFO | train_inner | epoch 001:  19112 / 47753 loss=2.97825, wps=34821.2, ups=1.97, wpb=17634, bsz=193974, num_updates=19100, lr=0.00497331, gnorm=0.353, clip=0, loss_scale=0, train_wall=51, wall=9571
+2020-05-28 20:23:54 | INFO | train_inner | epoch 001:  19212 / 47753 loss=2.95527, wps=34675.6, ups=1.99, wpb=17464.4, bsz=192108, num_updates=19200, lr=0.00497302, gnorm=0.324, clip=0, loss_scale=0, train_wall=50, wall=9622
+2020-05-28 20:24:44 | INFO | train_inner | epoch 001:  19312 / 47753 loss=2.99234, wps=34492, ups=1.99, wpb=17374.3, bsz=191117, num_updates=19300, lr=0.00497273, gnorm=0.322, clip=0, loss_scale=0, train_wall=50, wall=9672
+2020-05-28 20:25:34 | INFO | train_inner | epoch 001:  19412 / 47753 loss=2.95361, wps=34114.7, ups=2, wpb=17054, bsz=187594, num_updates=19400, lr=0.00497244, gnorm=0.335, clip=0, loss_scale=0, train_wall=50, wall=9722
+2020-05-28 20:26:24 | INFO | train_inner | epoch 001:  19512 / 47753 loss=2.93727, wps=34741.2, ups=1.98, wpb=17538.8, bsz=192927, num_updates=19500, lr=0.00497215, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=9773
+2020-05-28 20:27:14 | INFO | train_inner | epoch 001:  19612 / 47753 loss=2.92926, wps=34891.7, ups=2.03, wpb=17195.9, bsz=189155, num_updates=19600, lr=0.00497186, gnorm=0.334, clip=0, loss_scale=0, train_wall=49, wall=9822
+2020-05-28 20:28:04 | INFO | train_inner | epoch 001:  19712 / 47753 loss=2.9372, wps=35079.4, ups=1.99, wpb=17635.2, bsz=193987, num_updates=19700, lr=0.00497156, gnorm=0.348, clip=0, loss_scale=0, train_wall=50, wall=9872
+2020-05-28 20:28:55 | INFO | train_inner | epoch 001:  19812 / 47753 loss=2.96459, wps=35184.7, ups=1.98, wpb=17773.6, bsz=195509, num_updates=19800, lr=0.00497127, gnorm=0.341, clip=0, loss_scale=0, train_wall=50, wall=9923
+2020-05-28 20:29:45 | INFO | train_inner | epoch 001:  19912 / 47753 loss=2.89211, wps=34970, ups=1.98, wpb=17648.1, bsz=194129, num_updates=19900, lr=0.00497097, gnorm=0.33, clip=0, loss_scale=0, train_wall=50, wall=9973
+2020-05-28 20:30:35 | INFO | train_inner | epoch 001:  20012 / 47753 loss=2.97004, wps=34391.2, ups=1.98, wpb=17332.8, bsz=190661, num_updates=20000, lr=0.00497067, gnorm=0.363, clip=0, loss_scale=0, train_wall=50, wall=10023
+2020-05-28 20:31:25 | INFO | train_inner | epoch 001:  20112 / 47753 loss=2.94944, wps=34220.2, ups=2.01, wpb=17065.8, bsz=187724, num_updates=20100, lr=0.00497037, gnorm=0.349, clip=0, loss_scale=0, train_wall=50, wall=10073
+2020-05-28 20:32:16 | INFO | train_inner | epoch 001:  20212 / 47753 loss=2.94061, wps=34395.4, ups=1.98, wpb=17379, bsz=191169, num_updates=20200, lr=0.00497007, gnorm=0.355, clip=0, loss_scale=0, train_wall=50, wall=10124
+2020-05-28 20:33:06 | INFO | train_inner | epoch 001:  20312 / 47753 loss=2.91784, wps=34729, ups=2, wpb=17389.7, bsz=191286, num_updates=20300, lr=0.00496976, gnorm=0.334, clip=0, loss_scale=0, train_wall=50, wall=10174
+2020-05-28 20:33:56 | INFO | train_inner | epoch 001:  20412 / 47753 loss=2.95265, wps=34281.2, ups=2, wpb=17130.4, bsz=188435, num_updates=20400, lr=0.00496946, gnorm=0.363, clip=0, loss_scale=0, train_wall=50, wall=10224
+2020-05-28 20:34:46 | INFO | train_inner | epoch 001:  20512 / 47753 loss=2.90587, wps=34014.8, ups=2, wpb=17031.1, bsz=187342, num_updates=20500, lr=0.00496915, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=10274
+2020-05-28 20:35:37 | INFO | train_inner | epoch 001:  20612 / 47753 loss=2.87775, wps=34249.6, ups=1.97, wpb=17349.4, bsz=190844, num_updates=20600, lr=0.00496884, gnorm=0.324, clip=0, loss_scale=0, train_wall=51, wall=10325
+2020-05-28 20:36:26 | INFO | train_inner | epoch 001:  20712 / 47753 loss=2.92541, wps=34774.6, ups=2.02, wpb=17193.7, bsz=189131, num_updates=20700, lr=0.00496853, gnorm=0.341, clip=0, loss_scale=0, train_wall=49, wall=10374
+2020-05-28 20:37:16 | INFO | train_inner | epoch 001:  20812 / 47753 loss=2.9438, wps=33948, ups=1.99, wpb=17076.4, bsz=187840, num_updates=20800, lr=0.00496822, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=10424
+2020-05-28 20:38:06 | INFO | train_inner | epoch 001:  20912 / 47753 loss=2.94125, wps=34843.8, ups=2.02, wpb=17278.8, bsz=190067, num_updates=20900, lr=0.00496791, gnorm=0.372, clip=0, loss_scale=0, train_wall=50, wall=10474
+2020-05-28 20:38:56 | INFO | train_inner | epoch 001:  21012 / 47753 loss=2.94029, wps=34789.4, ups=2.01, wpb=17292.3, bsz=190215, num_updates=21000, lr=0.00496759, gnorm=0.33, clip=0, loss_scale=0, train_wall=50, wall=10524
+2020-05-28 20:39:46 | INFO | train_inner | epoch 001:  21112 / 47753 loss=2.91465, wps=34298.4, ups=2, wpb=17189.7, bsz=189087, num_updates=21100, lr=0.00496728, gnorm=0.342, clip=0, loss_scale=0, train_wall=50, wall=10574
+2020-05-28 20:40:36 | INFO | train_inner | epoch 001:  21212 / 47753 loss=2.9158, wps=34246.9, ups=1.97, wpb=17395.7, bsz=191353, num_updates=21200, lr=0.00496696, gnorm=0.361, clip=0, loss_scale=0, train_wall=51, wall=10625
+2020-05-28 20:41:26 | INFO | train_inner | epoch 001:  21312 / 47753 loss=2.91265, wps=35287.1, ups=2.01, wpb=17585.9, bsz=193445, num_updates=21300, lr=0.00496664, gnorm=0.316, clip=0, loss_scale=0, train_wall=50, wall=10674
+2020-05-28 20:42:17 | INFO | train_inner | epoch 001:  21412 / 47753 loss=2.92223, wps=34338.8, ups=1.97, wpb=17401.7, bsz=191419, num_updates=21400, lr=0.00496632, gnorm=0.331, clip=0, loss_scale=0, train_wall=51, wall=10725
+2020-05-28 20:43:07 | INFO | train_inner | epoch 001:  21512 / 47753 loss=2.90684, wps=33930.1, ups=1.98, wpb=17119.6, bsz=188315, num_updates=21500, lr=0.004966, gnorm=0.355, clip=0, loss_scale=0, train_wall=50, wall=10776
+2020-05-28 20:43:57 | INFO | train_inner | epoch 001:  21612 / 47753 loss=2.9509, wps=34510, ups=2, wpb=17249.9, bsz=189749, num_updates=21600, lr=0.00496567, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=10826
+2020-05-28 20:44:47 | INFO | train_inner | epoch 001:  21712 / 47753 loss=2.9034, wps=34558.9, ups=2.01, wpb=17233.4, bsz=189567, num_updates=21700, lr=0.00496535, gnorm=0.33, clip=0, loss_scale=0, train_wall=50, wall=10875
+2020-05-28 20:45:37 | INFO | train_inner | epoch 001:  21812 / 47753 loss=2.90482, wps=34546.4, ups=1.99, wpb=17317.8, bsz=190496, num_updates=21800, lr=0.00496502, gnorm=0.352, clip=0, loss_scale=0, train_wall=50, wall=10926
+2020-05-28 20:46:27 | INFO | train_inner | epoch 001:  21912 / 47753 loss=2.90804, wps=34247.8, ups=2, wpb=17136.5, bsz=188502, num_updates=21900, lr=0.00496469, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=10976
+2020-05-28 20:47:17 | INFO | train_inner | epoch 001:  22012 / 47753 loss=2.92043, wps=34513.8, ups=2.01, wpb=17153.2, bsz=188685, num_updates=22000, lr=0.00496436, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=11025
+2020-05-28 20:48:08 | INFO | train_inner | epoch 001:  22112 / 47753 loss=2.94193, wps=34217.1, ups=1.97, wpb=17379.1, bsz=191170, num_updates=22100, lr=0.00496403, gnorm=0.339, clip=0, loss_scale=0, train_wall=51, wall=11076
+2020-05-28 20:48:57 | INFO | train_inner | epoch 001:  22212 / 47753 loss=2.89641, wps=35433, ups=2.02, wpb=17518.5, bsz=192704, num_updates=22200, lr=0.0049637, gnorm=0.347, clip=0, loss_scale=0, train_wall=49, wall=11125
+2020-05-28 20:49:48 | INFO | train_inner | epoch 001:  22312 / 47753 loss=2.88488, wps=34215.1, ups=1.97, wpb=17365, bsz=191015, num_updates=22300, lr=0.00496336, gnorm=0.337, clip=0, loss_scale=0, train_wall=51, wall=11176
+2020-05-28 20:50:38 | INFO | train_inner | epoch 001:  22412 / 47753 loss=2.89235, wps=34810.8, ups=2, wpb=17411.5, bsz=191526, num_updates=22400, lr=0.00496303, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=11226
+2020-05-28 20:51:28 | INFO | train_inner | epoch 001:  22512 / 47753 loss=2.9185, wps=34302.6, ups=2.02, wpb=16950.1, bsz=186451, num_updates=22500, lr=0.00496269, gnorm=0.352, clip=0, loss_scale=0, train_wall=49, wall=11276
+2020-05-28 20:52:18 | INFO | train_inner | epoch 001:  22612 / 47753 loss=2.92586, wps=34436.8, ups=1.98, wpb=17362.9, bsz=190992, num_updates=22600, lr=0.00496235, gnorm=0.372, clip=0, loss_scale=0, train_wall=50, wall=11326
+2020-05-28 20:53:08 | INFO | train_inner | epoch 001:  22712 / 47753 loss=2.87862, wps=34540.9, ups=2, wpb=17276.5, bsz=190041, num_updates=22700, lr=0.00496201, gnorm=0.349, clip=0, loss_scale=0, train_wall=50, wall=11376
+2020-05-28 20:53:59 | INFO | train_inner | epoch 001:  22812 / 47753 loss=2.86773, wps=34434.8, ups=1.97, wpb=17461.6, bsz=192077, num_updates=22800, lr=0.00496167, gnorm=0.328, clip=0, loss_scale=0, train_wall=51, wall=11427
+2020-05-28 20:54:49 | INFO | train_inner | epoch 001:  22912 / 47753 loss=2.90295, wps=34602.4, ups=1.99, wpb=17366, bsz=191026, num_updates=22900, lr=0.00496132, gnorm=0.339, clip=0, loss_scale=0, train_wall=50, wall=11477
+2020-05-28 20:55:39 | INFO | train_inner | epoch 001:  23012 / 47753 loss=2.88511, wps=34751.4, ups=2.01, wpb=17270.2, bsz=189972, num_updates=23000, lr=0.00496098, gnorm=0.335, clip=0, loss_scale=0, train_wall=50, wall=11527
+2020-05-28 20:56:29 | INFO | train_inner | epoch 001:  23112 / 47753 loss=2.91854, wps=34212.7, ups=2, wpb=17141.7, bsz=188559, num_updates=23100, lr=0.00496063, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=11577
+2020-05-28 20:57:19 | INFO | train_inner | epoch 001:  23212 / 47753 loss=2.88933, wps=34920.6, ups=1.99, wpb=17516.6, bsz=192683, num_updates=23200, lr=0.00496028, gnorm=0.346, clip=0, loss_scale=0, train_wall=50, wall=11627
+2020-05-28 20:58:09 | INFO | train_inner | epoch 001:  23312 / 47753 loss=2.89513, wps=34299.2, ups=1.99, wpb=17202.9, bsz=189232, num_updates=23300, lr=0.00495993, gnorm=0.322, clip=0, loss_scale=0, train_wall=50, wall=11677
+2020-05-28 20:58:59 | INFO | train_inner | epoch 001:  23412 / 47753 loss=2.89224, wps=34707.3, ups=1.99, wpb=17438.7, bsz=191826, num_updates=23400, lr=0.00495958, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=11727
+2020-05-28 20:59:50 | INFO | train_inner | epoch 001:  23512 / 47753 loss=2.90712, wps=33538.8, ups=1.97, wpb=17012.3, bsz=187135, num_updates=23500, lr=0.00495923, gnorm=0.36, clip=0, loss_scale=0, train_wall=51, wall=11778
+2020-05-28 21:00:41 | INFO | train_inner | epoch 001:  23612 / 47753 loss=2.87932, wps=34800.1, ups=1.98, wpb=17613.7, bsz=193750, num_updates=23600, lr=0.00495887, gnorm=0.335, clip=0, loss_scale=0, train_wall=51, wall=11829
+2020-05-28 21:01:31 | INFO | train_inner | epoch 001:  23712 / 47753 loss=2.89373, wps=34517.3, ups=1.99, wpb=17306.7, bsz=190374, num_updates=23700, lr=0.00495852, gnorm=0.342, clip=0, loss_scale=0, train_wall=50, wall=11879
+2020-05-28 21:02:20 | INFO | train_inner | epoch 001:  23812 / 47753 loss=2.90781, wps=34209.6, ups=2.01, wpb=16989.4, bsz=186884, num_updates=23800, lr=0.00495816, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=11929
+2020-05-28 21:03:10 | INFO | train_inner | epoch 001:  23912 / 47753 loss=2.86717, wps=34979.6, ups=2, wpb=17458, bsz=192038, num_updates=23900, lr=0.0049578, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=11978
+2020-05-28 21:04:00 | INFO | train_inner | epoch 001:  24012 / 47753 loss=2.85922, wps=35026.5, ups=2.02, wpb=17351.4, bsz=190865, num_updates=24000, lr=0.00495744, gnorm=0.325, clip=0, loss_scale=0, train_wall=49, wall=12028
+2020-05-28 21:04:50 | INFO | train_inner | epoch 001:  24112 / 47753 loss=2.87124, wps=34541.2, ups=1.98, wpb=17451.2, bsz=191963, num_updates=24100, lr=0.00495708, gnorm=0.337, clip=0, loss_scale=0, train_wall=50, wall=12078
+2020-05-28 21:05:40 | INFO | train_inner | epoch 001:  24212 / 47753 loss=2.89207, wps=34505.9, ups=2, wpb=17276.2, bsz=190038, num_updates=24200, lr=0.00495672, gnorm=0.346, clip=0, loss_scale=0, train_wall=50, wall=12129
+2020-05-28 21:06:31 | INFO | train_inner | epoch 001:  24312 / 47753 loss=2.90776, wps=34555.5, ups=1.99, wpb=17325.8, bsz=190584, num_updates=24300, lr=0.00495635, gnorm=0.383, clip=0, loss_scale=0, train_wall=50, wall=12179
+2020-05-28 21:06:44 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.0625
+2020-05-28 21:07:22 | INFO | train_inner | epoch 001:  24413 / 47753 loss=2.9034, wps=33878, ups=1.94, wpb=17468.2, bsz=192150, num_updates=24400, lr=0.00495598, gnorm=0.368, clip=0, loss_scale=0, train_wall=51, wall=12230
+2020-05-28 21:08:13 | INFO | train_inner | epoch 001:  24513 / 47753 loss=2.8539, wps=34919.2, ups=1.98, wpb=17607.1, bsz=193678, num_updates=24500, lr=0.00495562, gnorm=0.343, clip=0, loss_scale=0, train_wall=50, wall=12281
+2020-05-28 21:09:03 | INFO | train_inner | epoch 001:  24613 / 47753 loss=2.88424, wps=34596.3, ups=2, wpb=17337.5, bsz=190713, num_updates=24600, lr=0.00495525, gnorm=0.34, clip=0, loss_scale=0, train_wall=50, wall=12331
+2020-05-28 21:09:53 | INFO | train_inner | epoch 001:  24713 / 47753 loss=2.85086, wps=34157.8, ups=1.99, wpb=17156.5, bsz=188722, num_updates=24700, lr=0.00495488, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=12381
+2020-05-28 21:10:43 | INFO | train_inner | epoch 001:  24813 / 47753 loss=2.90185, wps=34675.7, ups=1.99, wpb=17386.4, bsz=191250, num_updates=24800, lr=0.0049545, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=12431
+2020-05-28 21:11:34 | INFO | train_inner | epoch 001:  24913 / 47753 loss=2.89521, wps=34135.7, ups=1.98, wpb=17244.5, bsz=189689, num_updates=24900, lr=0.00495413, gnorm=0.357, clip=0, loss_scale=0, train_wall=50, wall=12482
+2020-05-28 21:12:24 | INFO | train_inner | epoch 001:  25013 / 47753 loss=2.86198, wps=34926.9, ups=1.99, wpb=17580.8, bsz=193389, num_updates=25000, lr=0.00495375, gnorm=0.368, clip=0, loss_scale=0, train_wall=50, wall=12532
+2020-05-28 21:12:56 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.03125
+2020-05-28 21:13:14 | INFO | train_inner | epoch 001:  25114 / 47753 loss=2.86268, wps=33958.4, ups=1.98, wpb=17168, bsz=188848, num_updates=25100, lr=0.00495338, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=12583
+2020-05-28 21:14:05 | INFO | train_inner | epoch 001:  25214 / 47753 loss=2.89888, wps=34081.5, ups=1.97, wpb=17305.6, bsz=190362, num_updates=25200, lr=0.004953, gnorm=0.366, clip=0, loss_scale=0, train_wall=51, wall=12633
+2020-05-28 21:14:56 | INFO | train_inner | epoch 001:  25314 / 47753 loss=2.89814, wps=34161, ups=1.97, wpb=17310.2, bsz=190412, num_updates=25300, lr=0.00495262, gnorm=0.369, clip=0, loss_scale=0, train_wall=51, wall=12684
+2020-05-28 21:15:46 | INFO | train_inner | epoch 001:  25414 / 47753 loss=2.88255, wps=33999.2, ups=1.99, wpb=17098, bsz=188078, num_updates=25400, lr=0.00495224, gnorm=0.341, clip=0, loss_scale=0, train_wall=50, wall=12734
+2020-05-28 21:16:36 | INFO | train_inner | epoch 001:  25514 / 47753 loss=2.84644, wps=34413.9, ups=2.01, wpb=17157.4, bsz=188731, num_updates=25500, lr=0.00495185, gnorm=0.339, clip=0, loss_scale=0, train_wall=50, wall=12784
+2020-05-28 21:17:26 | INFO | train_inner | epoch 001:  25614 / 47753 loss=2.8539, wps=34784.4, ups=2, wpb=17352.8, bsz=190881, num_updates=25600, lr=0.00495147, gnorm=0.338, clip=0, loss_scale=0, train_wall=50, wall=12834
+2020-05-28 21:18:16 | INFO | train_inner | epoch 001:  25714 / 47753 loss=2.85028, wps=34816.9, ups=1.99, wpb=17490.6, bsz=192397, num_updates=25700, lr=0.00495108, gnorm=0.341, clip=0, loss_scale=0, train_wall=50, wall=12884
+2020-05-28 21:19:06 | INFO | train_inner | epoch 001:  25814 / 47753 loss=2.84238, wps=34697.5, ups=1.99, wpb=17425, bsz=191675, num_updates=25800, lr=0.00495069, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=12935
+2020-05-28 21:19:57 | INFO | train_inner | epoch 001:  25914 / 47753 loss=2.86947, wps=35012.6, ups=1.97, wpb=17743.4, bsz=195178, num_updates=25900, lr=0.00495031, gnorm=0.346, clip=0, loss_scale=0, train_wall=51, wall=12985
+2020-05-28 21:20:47 | INFO | train_inner | epoch 001:  26014 / 47753 loss=2.85623, wps=34378.5, ups=1.99, wpb=17259.3, bsz=189852, num_updates=26000, lr=0.00494991, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=13035
+2020-05-28 21:21:37 | INFO | train_inner | epoch 001:  26114 / 47753 loss=2.86518, wps=33858.7, ups=2.03, wpb=16696.1, bsz=183657, num_updates=26100, lr=0.00494952, gnorm=0.371, clip=0, loss_scale=0, train_wall=49, wall=13085
+2020-05-28 21:22:27 | INFO | train_inner | epoch 001:  26214 / 47753 loss=2.88248, wps=34222.7, ups=2, wpb=17127.5, bsz=188402, num_updates=26200, lr=0.00494913, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=13135
+2020-05-28 21:23:17 | INFO | train_inner | epoch 001:  26314 / 47753 loss=2.8629, wps=34437.7, ups=1.99, wpb=17305.8, bsz=190364, num_updates=26300, lr=0.00494873, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=13185
+2020-05-28 21:24:07 | INFO | train_inner | epoch 001:  26414 / 47753 loss=2.86362, wps=34911, ups=2.01, wpb=17329.1, bsz=190620, num_updates=26400, lr=0.00494834, gnorm=0.417, clip=0, loss_scale=0, train_wall=50, wall=13235
+2020-05-28 21:24:57 | INFO | train_inner | epoch 001:  26514 / 47753 loss=2.86034, wps=34954.7, ups=1.99, wpb=17564.5, bsz=193210, num_updates=26500, lr=0.00494794, gnorm=0.376, clip=0, loss_scale=0, train_wall=50, wall=13285
+2020-05-28 21:25:48 | INFO | train_inner | epoch 001:  26614 / 47753 loss=2.84243, wps=34509.8, ups=1.97, wpb=17515.4, bsz=192670, num_updates=26600, lr=0.00494754, gnorm=0.336, clip=0, loss_scale=0, train_wall=51, wall=13336
+2020-05-28 21:26:37 | INFO | train_inner | epoch 001:  26714 / 47753 loss=2.83128, wps=34738.5, ups=2.01, wpb=17255.5, bsz=189810, num_updates=26700, lr=0.00494714, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=13385
+2020-05-28 21:27:27 | INFO | train_inner | epoch 001:  26814 / 47753 loss=2.89763, wps=34572.4, ups=2.01, wpb=17227.1, bsz=189498, num_updates=26800, lr=0.00494673, gnorm=0.375, clip=0, loss_scale=0, train_wall=50, wall=13435
+2020-05-28 21:28:18 | INFO | train_inner | epoch 001:  26914 / 47753 loss=2.87949, wps=34262, ups=1.98, wpb=17344.3, bsz=190788, num_updates=26900, lr=0.00494633, gnorm=0.333, clip=0, loss_scale=0, train_wall=51, wall=13486
+2020-05-28 21:29:00 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.015625
+2020-05-28 21:29:08 | INFO | train_inner | epoch 001:  27015 / 47753 loss=2.83512, wps=34296, ups=1.98, wpb=17285, bsz=190135, num_updates=27000, lr=0.00494592, gnorm=0.359, clip=0, loss_scale=0, train_wall=50, wall=13536
+2020-05-28 21:29:58 | INFO | train_inner | epoch 001:  27115 / 47753 loss=2.87804, wps=33912.7, ups=1.99, wpb=17027.9, bsz=187307, num_updates=27100, lr=0.00494552, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=13586
+2020-05-28 21:30:48 | INFO | train_inner | epoch 001:  27215 / 47753 loss=2.84601, wps=34672.9, ups=2, wpb=17325.5, bsz=190580, num_updates=27200, lr=0.00494511, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=13636
+2020-05-28 21:31:38 | INFO | train_inner | epoch 001:  27315 / 47753 loss=2.8423, wps=34337.3, ups=2, wpb=17198.7, bsz=189186, num_updates=27300, lr=0.0049447, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=13686
+2020-05-28 21:32:29 | INFO | train_inner | epoch 001:  27415 / 47753 loss=2.80294, wps=34524.2, ups=1.99, wpb=17339.4, bsz=190733, num_updates=27400, lr=0.00494428, gnorm=0.35, clip=0, loss_scale=0, train_wall=50, wall=13737
+2020-05-28 21:33:19 | INFO | train_inner | epoch 001:  27515 / 47753 loss=2.83946, wps=34761.3, ups=1.99, wpb=17443.3, bsz=191876, num_updates=27500, lr=0.00494387, gnorm=0.36, clip=0, loss_scale=0, train_wall=50, wall=13787
+2020-05-28 21:34:09 | INFO | train_inner | epoch 001:  27615 / 47753 loss=2.86835, wps=34406.3, ups=2, wpb=17207.8, bsz=189286, num_updates=27600, lr=0.00494346, gnorm=0.376, clip=0, loss_scale=0, train_wall=50, wall=13837
+2020-05-28 21:34:59 | INFO | train_inner | epoch 001:  27715 / 47753 loss=2.822, wps=35106.7, ups=1.98, wpb=17687.9, bsz=194567, num_updates=27700, lr=0.00494304, gnorm=0.328, clip=0, loss_scale=0, train_wall=50, wall=13887
+2020-05-28 21:35:50 | INFO | train_inner | epoch 001:  27815 / 47753 loss=2.80624, wps=34320.1, ups=1.96, wpb=17494.4, bsz=192439, num_updates=27800, lr=0.00494262, gnorm=0.328, clip=0, loss_scale=0, train_wall=51, wall=13938
+2020-05-28 21:36:41 | INFO | train_inner | epoch 001:  27915 / 47753 loss=2.85308, wps=34540.8, ups=1.96, wpb=17639.7, bsz=194037, num_updates=27900, lr=0.0049422, gnorm=0.367, clip=0, loss_scale=0, train_wall=51, wall=13989
+2020-05-28 21:37:31 | INFO | train_inner | epoch 001:  28015 / 47753 loss=2.79188, wps=34449.7, ups=2.02, wpb=17055.8, bsz=187614, num_updates=28000, lr=0.00494178, gnorm=0.345, clip=0, loss_scale=0, train_wall=49, wall=14039
+2020-05-28 21:38:21 | INFO | train_inner | epoch 001:  28115 / 47753 loss=2.81313, wps=34019.2, ups=2, wpb=16983.1, bsz=186814, num_updates=28100, lr=0.00494136, gnorm=0.347, clip=0, loss_scale=0, train_wall=50, wall=14089
+2020-05-28 21:39:11 | INFO | train_inner | epoch 001:  28215 / 47753 loss=2.85371, wps=34669.8, ups=2, wpb=17338.9, bsz=190728, num_updates=28200, lr=0.00494093, gnorm=0.373, clip=0, loss_scale=0, train_wall=50, wall=14139
+2020-05-28 21:40:01 | INFO | train_inner | epoch 001:  28315 / 47753 loss=2.82653, wps=35041.2, ups=1.99, wpb=17576.5, bsz=193341, num_updates=28300, lr=0.00494051, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=14189
+2020-05-28 21:40:51 | INFO | train_inner | epoch 001:  28415 / 47753 loss=2.85902, wps=34824.6, ups=2, wpb=17420.9, bsz=191630, num_updates=28400, lr=0.00494008, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=14239
+2020-05-28 21:41:42 | INFO | train_inner | epoch 001:  28515 / 47753 loss=2.82955, wps=34534.5, ups=1.97, wpb=17554.1, bsz=193096, num_updates=28500, lr=0.00493965, gnorm=0.338, clip=0, loss_scale=0, train_wall=51, wall=14290
+2020-05-28 21:42:32 | INFO | train_inner | epoch 001:  28615 / 47753 loss=2.8028, wps=34936.1, ups=2, wpb=17493.8, bsz=192432, num_updates=28600, lr=0.00493922, gnorm=0.336, clip=0, loss_scale=0, train_wall=50, wall=14340
+2020-05-28 21:43:22 | INFO | train_inner | epoch 001:  28715 / 47753 loss=2.84774, wps=34436.5, ups=2.01, wpb=17135.8, bsz=188494, num_updates=28700, lr=0.00493879, gnorm=0.443, clip=0, loss_scale=0, train_wall=50, wall=14390
+2020-05-28 21:44:12 | INFO | train_inner | epoch 001:  28815 / 47753 loss=2.85451, wps=34428.4, ups=2, wpb=17249.4, bsz=189743, num_updates=28800, lr=0.00493836, gnorm=0.349, clip=0, loss_scale=0, train_wall=50, wall=14440
+2020-05-28 21:45:02 | INFO | train_inner | epoch 001:  28915 / 47753 loss=2.84832, wps=34743.6, ups=1.97, wpb=17667.1, bsz=194338, num_updates=28900, lr=0.00493792, gnorm=0.378, clip=0, loss_scale=0, train_wall=51, wall=14491
+2020-05-28 21:45:53 | INFO | train_inner | epoch 001:  29015 / 47753 loss=2.82436, wps=35336.9, ups=1.98, wpb=17836.9, bsz=196206, num_updates=29000, lr=0.00493749, gnorm=0.38, clip=0, loss_scale=0, train_wall=50, wall=14541
+2020-05-28 21:46:43 | INFO | train_inner | epoch 001:  29115 / 47753 loss=2.85524, wps=34782.8, ups=2, wpb=17376.7, bsz=191143, num_updates=29100, lr=0.00493705, gnorm=0.366, clip=0, loss_scale=0, train_wall=50, wall=14591
+2020-05-28 21:47:33 | INFO | train_inner | epoch 001:  29215 / 47753 loss=2.86137, wps=34106, ups=1.99, wpb=17104, bsz=188144, num_updates=29200, lr=0.00493661, gnorm=0.494, clip=0, loss_scale=0, train_wall=50, wall=14641
+2020-05-28 21:48:23 | INFO | train_inner | epoch 001:  29315 / 47753 loss=2.86254, wps=34593.1, ups=1.99, wpb=17410.9, bsz=191520, num_updates=29300, lr=0.00493617, gnorm=0.362, clip=0, loss_scale=0, train_wall=50, wall=14691
+2020-05-28 21:49:14 | INFO | train_inner | epoch 001:  29415 / 47753 loss=2.83296, wps=34914.7, ups=1.99, wpb=17584.3, bsz=193427, num_updates=29400, lr=0.00493573, gnorm=0.35, clip=0, loss_scale=0, train_wall=50, wall=14742
+2020-05-28 21:50:04 | INFO | train_inner | epoch 001:  29515 / 47753 loss=2.83925, wps=34558.2, ups=1.99, wpb=17368.7, bsz=191056, num_updates=29500, lr=0.00493529, gnorm=0.365, clip=0, loss_scale=0, train_wall=50, wall=14792
+2020-05-28 21:50:54 | INFO | train_inner | epoch 001:  29615 / 47753 loss=2.84039, wps=34774.5, ups=2, wpb=17410.2, bsz=191512, num_updates=29600, lr=0.00493484, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=14842
+2020-05-28 21:51:44 | INFO | train_inner | epoch 001:  29715 / 47753 loss=2.81653, wps=34125.1, ups=2.02, wpb=16895.3, bsz=185849, num_updates=29700, lr=0.00493439, gnorm=0.351, clip=0, loss_scale=0, train_wall=49, wall=14892
+2020-05-28 21:52:33 | INFO | train_inner | epoch 001:  29815 / 47753 loss=2.80722, wps=34367.3, ups=2.01, wpb=17104, bsz=188144, num_updates=29800, lr=0.00493395, gnorm=0.34, clip=0, loss_scale=0, train_wall=50, wall=14941
+2020-05-28 21:53:23 | INFO | train_inner | epoch 001:  29915 / 47753 loss=2.85451, wps=34515.1, ups=1.99, wpb=17311.1, bsz=190422, num_updates=29900, lr=0.0049335, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=14992
+2020-05-28 21:54:14 | INFO | train_inner | epoch 001:  30015 / 47753 loss=2.80287, wps=34380.8, ups=1.99, wpb=17245.9, bsz=189704, num_updates=30000, lr=0.00493304, gnorm=0.329, clip=0, loss_scale=0, train_wall=50, wall=15042
+2020-05-28 21:55:04 | INFO | train_inner | epoch 001:  30115 / 47753 loss=2.85358, wps=34380.2, ups=1.97, wpb=17422.5, bsz=191648, num_updates=30100, lr=0.00493259, gnorm=0.341, clip=0, loss_scale=0, train_wall=51, wall=15092
+2020-05-28 21:55:54 | INFO | train_inner | epoch 001:  30215 / 47753 loss=2.77896, wps=34180.1, ups=2, wpb=17095.5, bsz=188050, num_updates=30200, lr=0.00493214, gnorm=0.346, clip=0, loss_scale=0, train_wall=50, wall=15142
+2020-05-28 21:56:44 | INFO | train_inner | epoch 001:  30315 / 47753 loss=2.83656, wps=34937.7, ups=1.99, wpb=17521.5, bsz=192736, num_updates=30300, lr=0.00493168, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=15193
+2020-05-28 21:57:34 | INFO | train_inner | epoch 001:  30415 / 47753 loss=2.82582, wps=34726.2, ups=2, wpb=17330, bsz=190630, num_updates=30400, lr=0.00493123, gnorm=0.347, clip=0, loss_scale=0, train_wall=50, wall=15242
+2020-05-28 21:58:25 | INFO | train_inner | epoch 001:  30515 / 47753 loss=2.79308, wps=34117.5, ups=1.99, wpb=17153.2, bsz=188685, num_updates=30500, lr=0.00493077, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=15293
+2020-05-28 21:59:14 | INFO | train_inner | epoch 001:  30615 / 47753 loss=2.78314, wps=35272.5, ups=2.02, wpb=17489.3, bsz=192383, num_updates=30600, lr=0.00493031, gnorm=0.346, clip=0, loss_scale=0, train_wall=49, wall=15342
+2020-05-28 22:00:04 | INFO | train_inner | epoch 001:  30715 / 47753 loss=2.78966, wps=34584.2, ups=2, wpb=17322.7, bsz=190550, num_updates=30700, lr=0.00492984, gnorm=0.366, clip=0, loss_scale=0, train_wall=50, wall=15392
+2020-05-28 22:00:55 | INFO | train_inner | epoch 001:  30815 / 47753 loss=2.83337, wps=34196.8, ups=1.98, wpb=17295.8, bsz=190254, num_updates=30800, lr=0.00492938, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=15443
+2020-05-28 22:01:45 | INFO | train_inner | epoch 001:  30915 / 47753 loss=2.80728, wps=34640.5, ups=1.99, wpb=17425.9, bsz=191684, num_updates=30900, lr=0.00492892, gnorm=0.36, clip=0, loss_scale=0, train_wall=50, wall=15493
+2020-05-28 22:02:36 | INFO | train_inner | epoch 001:  31015 / 47753 loss=2.81686, wps=34722.8, ups=1.97, wpb=17615, bsz=193765, num_updates=31000, lr=0.00492845, gnorm=0.341, clip=0, loss_scale=0, train_wall=51, wall=15544
+2020-05-28 22:03:26 | INFO | train_inner | epoch 001:  31115 / 47753 loss=2.80765, wps=34726.3, ups=2, wpb=17342.6, bsz=190768, num_updates=31100, lr=0.00492798, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=15594
+2020-05-28 22:04:15 | INFO | train_inner | epoch 001:  31215 / 47753 loss=2.83695, wps=34384.3, ups=2.02, wpb=17046.5, bsz=187512, num_updates=31200, lr=0.00492751, gnorm=0.368, clip=0, loss_scale=0, train_wall=49, wall=15644
+2020-05-28 22:05:06 | INFO | train_inner | epoch 001:  31315 / 47753 loss=2.81158, wps=34362, ups=1.99, wpb=17258.6, bsz=189844, num_updates=31300, lr=0.00492704, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=15694
+2020-05-28 22:05:55 | INFO | train_inner | epoch 001:  31415 / 47753 loss=2.79266, wps=34838.4, ups=2.02, wpb=17237.5, bsz=189613, num_updates=31400, lr=0.00492657, gnorm=0.356, clip=0, loss_scale=0, train_wall=49, wall=15743
+2020-05-28 22:06:45 | INFO | train_inner | epoch 001:  31515 / 47753 loss=2.82403, wps=34721, ups=2.02, wpb=17165.1, bsz=188816, num_updates=31500, lr=0.0049261, gnorm=0.368, clip=0, loss_scale=0, train_wall=49, wall=15793
+2020-05-28 22:07:35 | INFO | train_inner | epoch 001:  31615 / 47753 loss=2.83032, wps=34796.7, ups=1.99, wpb=17463.7, bsz=192100, num_updates=31600, lr=0.00492562, gnorm=0.388, clip=0, loss_scale=0, train_wall=50, wall=15843
+2020-05-28 22:08:25 | INFO | train_inner | epoch 001:  31715 / 47753 loss=2.83498, wps=34815.3, ups=1.99, wpb=17500, bsz=192500, num_updates=31700, lr=0.00492515, gnorm=0.381, clip=0, loss_scale=0, train_wall=50, wall=15893
+2020-05-28 22:09:14 | INFO | train_inner | epoch 001:  31815 / 47753 loss=2.77528, wps=34693.8, ups=2.04, wpb=17026.9, bsz=187296, num_updates=31800, lr=0.00492467, gnorm=0.351, clip=0, loss_scale=0, train_wall=49, wall=15942
+2020-05-28 22:10:05 | INFO | train_inner | epoch 001:  31915 / 47753 loss=2.82989, wps=35029, ups=1.98, wpb=17658.7, bsz=194245, num_updates=31900, lr=0.00492419, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=15993
+2020-05-28 22:10:55 | INFO | train_inner | epoch 001:  32015 / 47753 loss=2.79512, wps=35026.4, ups=1.99, wpb=17607.7, bsz=193685, num_updates=32000, lr=0.00492371, gnorm=0.35, clip=0, loss_scale=0, train_wall=50, wall=16043
+2020-05-28 22:11:45 | INFO | train_inner | epoch 001:  32115 / 47753 loss=2.7838, wps=34557.3, ups=2.01, wpb=17222.8, bsz=189451, num_updates=32100, lr=0.00492322, gnorm=0.374, clip=0, loss_scale=0, train_wall=50, wall=16093
+2020-05-28 22:12:35 | INFO | train_inner | epoch 001:  32215 / 47753 loss=2.80833, wps=34483.5, ups=1.98, wpb=17434.3, bsz=191777, num_updates=32200, lr=0.00492274, gnorm=0.365, clip=0, loss_scale=0, train_wall=50, wall=16143
+2020-05-28 22:13:25 | INFO | train_inner | epoch 001:  32315 / 47753 loss=2.81928, wps=34462.5, ups=2.01, wpb=17166.1, bsz=188827, num_updates=32300, lr=0.00492225, gnorm=0.361, clip=0, loss_scale=0, train_wall=50, wall=16193
+2020-05-28 22:14:15 | INFO | train_inner | epoch 001:  32415 / 47753 loss=2.82498, wps=34732.6, ups=1.99, wpb=17421.7, bsz=191638, num_updates=32400, lr=0.00492177, gnorm=0.369, clip=0, loss_scale=0, train_wall=50, wall=16243
+2020-05-28 22:15:06 | INFO | train_inner | epoch 001:  32515 / 47753 loss=2.81402, wps=34566.4, ups=1.97, wpb=17515.4, bsz=192670, num_updates=32500, lr=0.00492128, gnorm=0.352, clip=0, loss_scale=0, train_wall=51, wall=16294
+2020-05-28 22:15:56 | INFO | train_inner | epoch 001:  32615 / 47753 loss=2.76752, wps=34709.6, ups=2, wpb=17370.5, bsz=191076, num_updates=32600, lr=0.00492079, gnorm=0.369, clip=0, loss_scale=0, train_wall=50, wall=16344
+2020-05-28 22:16:46 | INFO | train_inner | epoch 001:  32715 / 47753 loss=2.77529, wps=34776.6, ups=2, wpb=17420.7, bsz=191628, num_updates=32700, lr=0.0049203, gnorm=0.352, clip=0, loss_scale=0, train_wall=50, wall=16394
+2020-05-28 22:17:37 | INFO | train_inner | epoch 001:  32815 / 47753 loss=2.78725, wps=35098.8, ups=1.98, wpb=17730.8, bsz=195039, num_updates=32800, lr=0.0049198, gnorm=0.341, clip=0, loss_scale=0, train_wall=50, wall=16445
+2020-05-28 22:18:27 | INFO | train_inner | epoch 001:  32915 / 47753 loss=2.81721, wps=34321.1, ups=1.98, wpb=17354.3, bsz=190898, num_updates=32900, lr=0.00491931, gnorm=0.339, clip=0, loss_scale=0, train_wall=50, wall=16495
+2020-05-28 22:19:17 | INFO | train_inner | epoch 001:  33015 / 47753 loss=2.79599, wps=35026, ups=2.02, wpb=17373.1, bsz=191104, num_updates=33000, lr=0.00491881, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=16545
+2020-05-28 22:20:07 | INFO | train_inner | epoch 001:  33115 / 47753 loss=2.8227, wps=34163.3, ups=1.99, wpb=17132.2, bsz=188454, num_updates=33100, lr=0.00491831, gnorm=0.357, clip=0, loss_scale=0, train_wall=50, wall=16595
+2020-05-28 22:20:57 | INFO | train_inner | epoch 001:  33215 / 47753 loss=2.7881, wps=34502.5, ups=1.99, wpb=17321.3, bsz=190535, num_updates=33200, lr=0.00491782, gnorm=0.334, clip=0, loss_scale=0, train_wall=50, wall=16645
+2020-05-28 22:21:48 | INFO | train_inner | epoch 001:  33315 / 47753 loss=2.8141, wps=34340.5, ups=1.97, wpb=17442.4, bsz=191866, num_updates=33300, lr=0.00491731, gnorm=0.358, clip=0, loss_scale=0, train_wall=51, wall=16696
+2020-05-28 22:22:38 | INFO | train_inner | epoch 001:  33415 / 47753 loss=2.80427, wps=35022.1, ups=2, wpb=17475.8, bsz=192234, num_updates=33400, lr=0.00491681, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=16746
+2020-05-28 22:23:28 | INFO | train_inner | epoch 001:  33515 / 47753 loss=2.79248, wps=34759.6, ups=2, wpb=17412.8, bsz=191541, num_updates=33500, lr=0.00491631, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=16796
+2020-05-28 22:24:17 | INFO | train_inner | epoch 001:  33615 / 47753 loss=2.77975, wps=34951.5, ups=2.02, wpb=17334.1, bsz=190675, num_updates=33600, lr=0.0049158, gnorm=0.349, clip=0, loss_scale=0, train_wall=50, wall=16846
+2020-05-28 22:25:07 | INFO | train_inner | epoch 001:  33715 / 47753 loss=2.78244, wps=34278, ups=2.01, wpb=17060.7, bsz=187668, num_updates=33700, lr=0.0049153, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=16895
+2020-05-28 22:25:57 | INFO | train_inner | epoch 001:  33815 / 47753 loss=2.74924, wps=34520.5, ups=1.99, wpb=17307.1, bsz=190378, num_updates=33800, lr=0.00491479, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=16945
+2020-05-28 22:26:47 | INFO | train_inner | epoch 001:  33915 / 47753 loss=2.75426, wps=35647.4, ups=2.02, wpb=17685.3, bsz=194538, num_updates=33900, lr=0.00491428, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=16995
+2020-05-28 22:27:36 | INFO | train_inner | epoch 001:  34015 / 47753 loss=2.77938, wps=34522.6, ups=2.02, wpb=17091.4, bsz=188005, num_updates=34000, lr=0.00491377, gnorm=0.344, clip=0, loss_scale=0, train_wall=49, wall=17045
+2020-05-28 22:28:26 | INFO | train_inner | epoch 001:  34115 / 47753 loss=2.78117, wps=33572, ups=2, wpb=16772.2, bsz=184494, num_updates=34100, lr=0.00491326, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=17095
+2020-05-28 22:29:16 | INFO | train_inner | epoch 001:  34215 / 47753 loss=2.81153, wps=34175.1, ups=2, wpb=17063.8, bsz=187701, num_updates=34200, lr=0.00491274, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=17144
+2020-05-28 22:30:06 | INFO | train_inner | epoch 001:  34315 / 47753 loss=2.82927, wps=34080.8, ups=2.01, wpb=16953, bsz=186483, num_updates=34300, lr=0.00491223, gnorm=0.367, clip=0, loss_scale=0, train_wall=50, wall=17194
+2020-05-28 22:30:56 | INFO | train_inner | epoch 001:  34415 / 47753 loss=2.81513, wps=34359.2, ups=2.01, wpb=17133.8, bsz=188472, num_updates=34400, lr=0.00491171, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=17244
+2020-05-28 22:31:46 | INFO | train_inner | epoch 001:  34515 / 47753 loss=2.78123, wps=35139.5, ups=2.01, wpb=17471.8, bsz=192189, num_updates=34500, lr=0.00491119, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=17294
+2020-05-28 22:32:36 | INFO | train_inner | epoch 001:  34615 / 47753 loss=2.73726, wps=34889.1, ups=2, wpb=17445.4, bsz=191899, num_updates=34600, lr=0.00491067, gnorm=0.347, clip=0, loss_scale=0, train_wall=50, wall=17344
+2020-05-28 22:33:26 | INFO | train_inner | epoch 001:  34715 / 47753 loss=2.77526, wps=35019, ups=1.97, wpb=17767.8, bsz=195446, num_updates=34700, lr=0.00491015, gnorm=0.348, clip=0, loss_scale=0, train_wall=51, wall=17395
+2020-05-28 22:34:16 | INFO | train_inner | epoch 001:  34815 / 47753 loss=2.7804, wps=34497.2, ups=2.01, wpb=17125.1, bsz=188376, num_updates=34800, lr=0.00490963, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=17444
+2020-05-28 22:35:06 | INFO | train_inner | epoch 001:  34915 / 47753 loss=2.78255, wps=34956.6, ups=1.99, wpb=17562.2, bsz=193184, num_updates=34900, lr=0.0049091, gnorm=0.356, clip=0, loss_scale=0, train_wall=50, wall=17494
+2020-05-28 22:35:56 | INFO | train_inner | epoch 001:  35015 / 47753 loss=2.76612, wps=34796.2, ups=2.01, wpb=17307.6, bsz=190384, num_updates=35000, lr=0.00490858, gnorm=0.337, clip=0, loss_scale=0, train_wall=50, wall=17544
+2020-05-28 22:36:46 | INFO | train_inner | epoch 001:  35115 / 47753 loss=2.79388, wps=34568.6, ups=1.98, wpb=17420.7, bsz=191628, num_updates=35100, lr=0.00490805, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=17595
+2020-05-28 22:37:37 | INFO | train_inner | epoch 001:  35215 / 47753 loss=2.7951, wps=34432.9, ups=1.98, wpb=17365.9, bsz=191025, num_updates=35200, lr=0.00490752, gnorm=0.372, clip=0, loss_scale=0, train_wall=50, wall=17645
+2020-05-28 22:38:27 | INFO | train_inner | epoch 001:  35315 / 47753 loss=2.78991, wps=34248.7, ups=1.98, wpb=17322.2, bsz=190545, num_updates=35300, lr=0.00490699, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=17696
+2020-05-28 22:39:18 | INFO | train_inner | epoch 001:  35415 / 47753 loss=2.81763, wps=34198.1, ups=1.99, wpb=17194.4, bsz=189139, num_updates=35400, lr=0.00490646, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=17746
+2020-05-28 22:40:07 | INFO | train_inner | epoch 001:  35515 / 47753 loss=2.78156, wps=33925.5, ups=2.02, wpb=16797.3, bsz=184770, num_updates=35500, lr=0.00490592, gnorm=0.347, clip=0, loss_scale=0, train_wall=49, wall=17795
+2020-05-28 22:40:57 | INFO | train_inner | epoch 001:  35615 / 47753 loss=2.76377, wps=34304.4, ups=1.99, wpb=17213.8, bsz=189351, num_updates=35600, lr=0.00490539, gnorm=0.359, clip=0, loss_scale=0, train_wall=50, wall=17846
+2020-05-28 22:41:47 | INFO | train_inner | epoch 001:  35715 / 47753 loss=2.78203, wps=34550.2, ups=2.01, wpb=17163.5, bsz=188798, num_updates=35700, lr=0.00490485, gnorm=0.38, clip=0, loss_scale=0, train_wall=50, wall=17895
+2020-05-28 22:42:37 | INFO | train_inner | epoch 001:  35815 / 47753 loss=2.75972, wps=34071.6, ups=1.99, wpb=17121.2, bsz=188334, num_updates=35800, lr=0.00490431, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=17945
+2020-05-28 22:43:27 | INFO | train_inner | epoch 001:  35915 / 47753 loss=2.76892, wps=34076.9, ups=2.01, wpb=16982.2, bsz=186804, num_updates=35900, lr=0.00490377, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=17995
+2020-05-28 22:44:17 | INFO | train_inner | epoch 001:  36015 / 47753 loss=2.742, wps=35030.3, ups=2, wpb=17518.5, bsz=192704, num_updates=36000, lr=0.00490323, gnorm=0.357, clip=0, loss_scale=0, train_wall=50, wall=18045
+2020-05-28 22:45:07 | INFO | train_inner | epoch 001:  36115 / 47753 loss=2.78056, wps=34493.6, ups=2.03, wpb=17015.8, bsz=187174, num_updates=36100, lr=0.00490269, gnorm=0.417, clip=0, loss_scale=0, train_wall=49, wall=18095
+2020-05-28 22:45:56 | INFO | train_inner | epoch 001:  36215 / 47753 loss=2.75324, wps=34679.4, ups=2.01, wpb=17250.7, bsz=189758, num_updates=36200, lr=0.00490215, gnorm=0.384, clip=0, loss_scale=0, train_wall=50, wall=18144
+2020-05-28 22:46:46 | INFO | train_inner | epoch 001:  36315 / 47753 loss=2.76657, wps=34732.6, ups=2.01, wpb=17274.8, bsz=190023, num_updates=36300, lr=0.0049016, gnorm=0.359, clip=0, loss_scale=0, train_wall=50, wall=18194
+2020-05-28 22:47:36 | INFO | train_inner | epoch 001:  36415 / 47753 loss=2.74351, wps=34966.9, ups=2.01, wpb=17361.1, bsz=190972, num_updates=36400, lr=0.00490106, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=18244
+2020-05-28 22:48:25 | INFO | train_inner | epoch 001:  36515 / 47753 loss=2.7501, wps=34417.3, ups=2.02, wpb=17045, bsz=187495, num_updates=36500, lr=0.00490051, gnorm=0.364, clip=0, loss_scale=0, train_wall=49, wall=18293
+2020-05-28 22:49:15 | INFO | train_inner | epoch 001:  36615 / 47753 loss=2.76911, wps=34273.9, ups=2.02, wpb=16996.9, bsz=186966, num_updates=36600, lr=0.00489996, gnorm=0.362, clip=0, loss_scale=0, train_wall=50, wall=18343
+2020-05-28 22:49:51 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.015625
+2020-05-28 22:50:05 | INFO | train_inner | epoch 001:  36716 / 47753 loss=2.77089, wps=34240.5, ups=2, wpb=17139.9, bsz=188539, num_updates=36700, lr=0.00489941, gnorm=0.424, clip=0, loss_scale=0, train_wall=50, wall=18393
+2020-05-28 22:50:55 | INFO | train_inner | epoch 001:  36816 / 47753 loss=2.74571, wps=35046.7, ups=1.98, wpb=17659.5, bsz=194254, num_updates=36800, lr=0.00489885, gnorm=0.336, clip=0, loss_scale=0, train_wall=50, wall=18443
+2020-05-28 22:51:46 | INFO | train_inner | epoch 001:  36916 / 47753 loss=2.75343, wps=34473.8, ups=1.98, wpb=17401.6, bsz=191417, num_updates=36900, lr=0.0048983, gnorm=0.332, clip=0, loss_scale=0, train_wall=50, wall=18494
+2020-05-28 22:52:35 | INFO | train_inner | epoch 001:  37016 / 47753 loss=2.76263, wps=34253.9, ups=2.02, wpb=16998.6, bsz=186985, num_updates=37000, lr=0.00489774, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=18543
+2020-05-28 22:53:25 | INFO | train_inner | epoch 001:  37116 / 47753 loss=2.79022, wps=34761.8, ups=2.01, wpb=17273.2, bsz=190005, num_updates=37100, lr=0.00489719, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=18593
+2020-05-28 22:54:15 | INFO | train_inner | epoch 001:  37216 / 47753 loss=2.76383, wps=34459.2, ups=2.01, wpb=17140, bsz=188540, num_updates=37200, lr=0.00489663, gnorm=0.366, clip=0, loss_scale=0, train_wall=50, wall=18643
+2020-05-28 22:55:05 | INFO | train_inner | epoch 001:  37316 / 47753 loss=2.78379, wps=34863.4, ups=2.01, wpb=17353.7, bsz=190890, num_updates=37300, lr=0.00489607, gnorm=0.396, clip=0, loss_scale=0, train_wall=50, wall=18693
+2020-05-28 22:55:54 | INFO | train_inner | epoch 001:  37416 / 47753 loss=2.76641, wps=34493.9, ups=2.01, wpb=17133.4, bsz=188467, num_updates=37400, lr=0.00489551, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=18742
+2020-05-28 22:56:44 | INFO | train_inner | epoch 001:  37516 / 47753 loss=2.74774, wps=34877.3, ups=1.99, wpb=17537.6, bsz=192913, num_updates=37500, lr=0.00489494, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=18793
+2020-05-28 22:57:35 | INFO | train_inner | epoch 001:  37616 / 47753 loss=2.72257, wps=34999.5, ups=1.98, wpb=17687, bsz=194557, num_updates=37600, lr=0.00489438, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=18843
+2020-05-28 22:58:25 | INFO | train_inner | epoch 001:  37716 / 47753 loss=2.79271, wps=34669.4, ups=2.01, wpb=17283.1, bsz=190114, num_updates=37700, lr=0.00489381, gnorm=0.368, clip=0, loss_scale=0, train_wall=50, wall=18893
+2020-05-28 22:59:15 | INFO | train_inner | epoch 001:  37816 / 47753 loss=2.79699, wps=34539, ups=2, wpb=17260.3, bsz=189863, num_updates=37800, lr=0.00489324, gnorm=0.33, clip=0, loss_scale=0, train_wall=50, wall=18943
+2020-05-28 23:00:04 | INFO | train_inner | epoch 001:  37916 / 47753 loss=2.80695, wps=34261.4, ups=2.02, wpb=16957.3, bsz=186530, num_updates=37900, lr=0.00489268, gnorm=0.381, clip=0, loss_scale=0, train_wall=49, wall=18992
+2020-05-28 23:00:54 | INFO | train_inner | epoch 001:  38016 / 47753 loss=2.72518, wps=34555.9, ups=2.02, wpb=17096, bsz=188056, num_updates=38000, lr=0.0048921, gnorm=0.348, clip=0, loss_scale=0, train_wall=49, wall=19042
+2020-05-28 23:01:44 | INFO | train_inner | epoch 001:  38116 / 47753 loss=2.70904, wps=34792.6, ups=2, wpb=17412.5, bsz=191538, num_updates=38100, lr=0.00489153, gnorm=0.337, clip=0, loss_scale=0, train_wall=50, wall=19092
+2020-05-28 23:02:34 | INFO | train_inner | epoch 001:  38216 / 47753 loss=2.72488, wps=35026.1, ups=2.01, wpb=17417.2, bsz=191589, num_updates=38200, lr=0.00489096, gnorm=0.338, clip=0, loss_scale=0, train_wall=50, wall=19142
+2020-05-28 23:03:24 | INFO | train_inner | epoch 001:  38316 / 47753 loss=2.76622, wps=33853.7, ups=1.99, wpb=17036.6, bsz=187403, num_updates=38300, lr=0.00489038, gnorm=0.36, clip=0, loss_scale=0, train_wall=50, wall=19192
+2020-05-28 23:04:14 | INFO | train_inner | epoch 001:  38416 / 47753 loss=2.73039, wps=34518.9, ups=2, wpb=17287.2, bsz=190159, num_updates=38400, lr=0.00488981, gnorm=0.361, clip=0, loss_scale=0, train_wall=50, wall=19242
+2020-05-28 23:05:05 | INFO | train_inner | epoch 001:  38516 / 47753 loss=2.78304, wps=34048.1, ups=1.95, wpb=17420.9, bsz=191630, num_updates=38500, lr=0.00488923, gnorm=0.369, clip=0, loss_scale=0, train_wall=51, wall=19293
+2020-05-28 23:05:55 | INFO | train_inner | epoch 001:  38616 / 47753 loss=2.73737, wps=34737.9, ups=1.99, wpb=17454.2, bsz=191996, num_updates=38600, lr=0.00488865, gnorm=0.349, clip=0, loss_scale=0, train_wall=50, wall=19343
+2020-05-28 23:06:46 | INFO | train_inner | epoch 001:  38716 / 47753 loss=2.78204, wps=34412.2, ups=1.97, wpb=17496.7, bsz=192463, num_updates=38700, lr=0.00488807, gnorm=0.372, clip=0, loss_scale=0, train_wall=51, wall=19394
+2020-05-28 23:07:37 | INFO | train_inner | epoch 001:  38816 / 47753 loss=2.7615, wps=34454.6, ups=1.97, wpb=17468.3, bsz=192151, num_updates=38800, lr=0.00488749, gnorm=0.349, clip=0, loss_scale=0, train_wall=51, wall=19445
+2020-05-28 23:08:27 | INFO | train_inner | epoch 001:  38916 / 47753 loss=2.75805, wps=34446.9, ups=2.01, wpb=17127.3, bsz=188400, num_updates=38900, lr=0.0048869, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=19495
+2020-05-28 23:09:17 | INFO | train_inner | epoch 001:  39016 / 47753 loss=2.72631, wps=34693.8, ups=2, wpb=17328.1, bsz=190609, num_updates=39000, lr=0.00488632, gnorm=0.354, clip=0, loss_scale=0, train_wall=50, wall=19545
+2020-05-28 23:10:07 | INFO | train_inner | epoch 001:  39116 / 47753 loss=2.77403, wps=34443, ups=2, wpb=17207.4, bsz=189281, num_updates=39100, lr=0.00488573, gnorm=0.356, clip=0, loss_scale=0, train_wall=50, wall=19595
+2020-05-28 23:10:57 | INFO | train_inner | epoch 001:  39216 / 47753 loss=2.78608, wps=34067.3, ups=1.99, wpb=17130, bsz=188430, num_updates=39200, lr=0.00488514, gnorm=0.373, clip=0, loss_scale=0, train_wall=50, wall=19645
+2020-05-28 23:11:48 | INFO | train_inner | epoch 001:  39316 / 47753 loss=2.73352, wps=34542.8, ups=1.97, wpb=17561, bsz=193171, num_updates=39300, lr=0.00488455, gnorm=0.342, clip=0, loss_scale=0, train_wall=51, wall=19696
+2020-05-28 23:12:38 | INFO | train_inner | epoch 001:  39416 / 47753 loss=2.72228, wps=34949.9, ups=2, wpb=17480.3, bsz=192284, num_updates=39400, lr=0.00488396, gnorm=0.35, clip=0, loss_scale=0, train_wall=50, wall=19746
+2020-05-28 23:13:28 | INFO | train_inner | epoch 001:  39516 / 47753 loss=2.74567, wps=34704.3, ups=2, wpb=17311.4, bsz=190425, num_updates=39500, lr=0.00488337, gnorm=0.365, clip=0, loss_scale=0, train_wall=50, wall=19796
+2020-05-28 23:14:18 | INFO | train_inner | epoch 001:  39616 / 47753 loss=2.73779, wps=34600.9, ups=1.98, wpb=17507.4, bsz=192581, num_updates=39600, lr=0.00488278, gnorm=0.355, clip=0, loss_scale=0, train_wall=51, wall=19846
+2020-05-28 23:15:08 | INFO | train_inner | epoch 001:  39716 / 47753 loss=2.7597, wps=34626.4, ups=2, wpb=17337.4, bsz=190712, num_updates=39700, lr=0.00488218, gnorm=0.381, clip=0, loss_scale=0, train_wall=50, wall=19896
+2020-05-28 23:15:59 | INFO | train_inner | epoch 001:  39816 / 47753 loss=2.73545, wps=34398.6, ups=1.98, wpb=17407.8, bsz=191486, num_updates=39800, lr=0.00488158, gnorm=0.364, clip=0, loss_scale=0, train_wall=51, wall=19947
+2020-05-28 23:16:50 | INFO | train_inner | epoch 001:  39916 / 47753 loss=2.77345, wps=34809.8, ups=1.97, wpb=17636.8, bsz=194004, num_updates=39900, lr=0.00488098, gnorm=0.356, clip=0, loss_scale=0, train_wall=51, wall=19998
+2020-05-28 23:17:38 | INFO | train_inner | epoch 001:  40016 / 47753 loss=2.69921, wps=35358, ups=2.06, wpb=17194.3, bsz=189137, num_updates=40000, lr=0.00488038, gnorm=0.371, clip=0, loss_scale=0, train_wall=49, wall=20046
+2020-05-28 23:18:28 | INFO | train_inner | epoch 001:  40116 / 47753 loss=2.72886, wps=34515.4, ups=2, wpb=17258.5, bsz=189844, num_updates=40100, lr=0.00487978, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=20096
+2020-05-28 23:19:18 | INFO | train_inner | epoch 001:  40216 / 47753 loss=2.77044, wps=34012.8, ups=2, wpb=17000.6, bsz=187007, num_updates=40200, lr=0.00487918, gnorm=0.377, clip=0, loss_scale=0, train_wall=50, wall=20146
+2020-05-28 23:20:09 | INFO | train_inner | epoch 001:  40316 / 47753 loss=2.69934, wps=34916.5, ups=1.96, wpb=17784.4, bsz=195629, num_updates=40300, lr=0.00487858, gnorm=0.381, clip=0, loss_scale=0, train_wall=51, wall=20197
+2020-05-28 23:20:59 | INFO | train_inner | epoch 001:  40416 / 47753 loss=2.72176, wps=34465.8, ups=1.98, wpb=17364.4, bsz=191008, num_updates=40400, lr=0.00487797, gnorm=0.357, clip=0, loss_scale=0, train_wall=50, wall=20248
+2020-05-28 23:21:49 | INFO | train_inner | epoch 001:  40516 / 47753 loss=2.77828, wps=34651.3, ups=2.04, wpb=17014, bsz=187154, num_updates=40500, lr=0.00487736, gnorm=0.373, clip=0, loss_scale=0, train_wall=49, wall=20297
+2020-05-28 23:22:39 | INFO | train_inner | epoch 001:  40616 / 47753 loss=2.73684, wps=34548.3, ups=2, wpb=17248.9, bsz=189738, num_updates=40600, lr=0.00487675, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=20347
+2020-05-28 23:23:29 | INFO | train_inner | epoch 001:  40716 / 47753 loss=2.76881, wps=34106.1, ups=1.98, wpb=17187.3, bsz=189060, num_updates=40700, lr=0.00487614, gnorm=0.35, clip=0, loss_scale=0, train_wall=50, wall=20397
+2020-05-28 23:24:18 | INFO | train_inner | epoch 001:  40816 / 47753 loss=2.71876, wps=34755.1, ups=2.02, wpb=17201.3, bsz=189214, num_updates=40800, lr=0.00487553, gnorm=0.35, clip=0, loss_scale=0, train_wall=49, wall=20446
+2020-05-28 23:25:08 | INFO | train_inner | epoch 001:  40916 / 47753 loss=2.75803, wps=34207, ups=2.02, wpb=16961.1, bsz=186572, num_updates=40900, lr=0.00487492, gnorm=0.383, clip=0, loss_scale=0, train_wall=49, wall=20496
+2020-05-28 23:25:58 | INFO | train_inner | epoch 001:  41016 / 47753 loss=2.73061, wps=34034.2, ups=2, wpb=16991, bsz=186901, num_updates=41000, lr=0.0048743, gnorm=0.379, clip=0, loss_scale=0, train_wall=50, wall=20546
+2020-05-28 23:26:48 | INFO | train_inner | epoch 001:  41116 / 47753 loss=2.74345, wps=33986.9, ups=1.99, wpb=17064.8, bsz=187713, num_updates=41100, lr=0.00487369, gnorm=0.352, clip=0, loss_scale=0, train_wall=50, wall=20596
+2020-05-28 23:27:38 | INFO | train_inner | epoch 001:  41216 / 47753 loss=2.72539, wps=35002.1, ups=2.02, wpb=17326.9, bsz=190596, num_updates=41200, lr=0.00487307, gnorm=0.369, clip=0, loss_scale=0, train_wall=49, wall=20646
+2020-05-28 23:28:27 | INFO | train_inner | epoch 001:  41316 / 47753 loss=2.78251, wps=34680.5, ups=2.02, wpb=17135, bsz=188485, num_updates=41300, lr=0.00487245, gnorm=0.363, clip=0, loss_scale=0, train_wall=49, wall=20695
+2020-05-28 23:29:17 | INFO | train_inner | epoch 001:  41416 / 47753 loss=2.71632, wps=34742.5, ups=1.98, wpb=17535.7, bsz=192892, num_updates=41400, lr=0.00487183, gnorm=0.369, clip=0, loss_scale=0, train_wall=50, wall=20746
+2020-05-28 23:30:07 | INFO | train_inner | epoch 001:  41516 / 47753 loss=2.75332, wps=34350.5, ups=2.01, wpb=17120.3, bsz=188323, num_updates=41500, lr=0.00487121, gnorm=0.388, clip=0, loss_scale=0, train_wall=50, wall=20795
+2020-05-28 23:30:58 | INFO | train_inner | epoch 001:  41616 / 47753 loss=2.73238, wps=34527.1, ups=1.99, wpb=17370.7, bsz=191078, num_updates=41600, lr=0.00487058, gnorm=0.35, clip=0, loss_scale=0, train_wall=50, wall=20846
+2020-05-28 23:31:48 | INFO | train_inner | epoch 001:  41716 / 47753 loss=2.71583, wps=34915.9, ups=2, wpb=17428.8, bsz=191717, num_updates=41700, lr=0.00486996, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=20896
+2020-05-28 23:32:38 | INFO | train_inner | epoch 001:  41816 / 47753 loss=2.72179, wps=34051.9, ups=1.98, wpb=17240.8, bsz=189648, num_updates=41800, lr=0.00486933, gnorm=0.343, clip=0, loss_scale=0, train_wall=51, wall=20946
+2020-05-28 23:33:28 | INFO | train_inner | epoch 001:  41916 / 47753 loss=2.729, wps=34834.3, ups=2.01, wpb=17356.5, bsz=190922, num_updates=41900, lr=0.0048687, gnorm=0.349, clip=0, loss_scale=0, train_wall=50, wall=20996
+2020-05-28 23:34:17 | INFO | train_inner | epoch 001:  42016 / 47753 loss=2.73523, wps=34209.8, ups=2.02, wpb=16918.1, bsz=186099, num_updates=42000, lr=0.00486807, gnorm=0.369, clip=0, loss_scale=0, train_wall=49, wall=21046
+2020-05-28 23:35:07 | INFO | train_inner | epoch 001:  42116 / 47753 loss=2.70253, wps=35195.5, ups=2.01, wpb=17498.8, bsz=192486, num_updates=42100, lr=0.00486744, gnorm=0.355, clip=0, loss_scale=0, train_wall=50, wall=21095
+2020-05-28 23:35:57 | INFO | train_inner | epoch 001:  42216 / 47753 loss=2.72732, wps=34890, ups=2.01, wpb=17345.6, bsz=190802, num_updates=42200, lr=0.00486681, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=21145
+2020-05-28 23:36:47 | INFO | train_inner | epoch 001:  42316 / 47753 loss=2.73577, wps=33844.1, ups=2, wpb=16907.8, bsz=185986, num_updates=42300, lr=0.00486618, gnorm=0.369, clip=0, loss_scale=0, train_wall=50, wall=21195
+2020-05-28 23:37:37 | INFO | train_inner | epoch 001:  42416 / 47753 loss=2.70757, wps=34392, ups=2.01, wpb=17130.4, bsz=188435, num_updates=42400, lr=0.00486554, gnorm=0.36, clip=0, loss_scale=0, train_wall=50, wall=21245
+2020-05-28 23:38:27 | INFO | train_inner | epoch 001:  42516 / 47753 loss=2.71945, wps=34126.7, ups=1.99, wpb=17110.9, bsz=188220, num_updates=42500, lr=0.00486491, gnorm=0.378, clip=0, loss_scale=0, train_wall=50, wall=21295
+2020-05-28 23:39:17 | INFO | train_inner | epoch 001:  42616 / 47753 loss=2.7154, wps=34311.7, ups=1.98, wpb=17286.5, bsz=190152, num_updates=42600, lr=0.00486427, gnorm=0.343, clip=0, loss_scale=0, train_wall=50, wall=21345
+2020-05-28 23:40:07 | INFO | train_inner | epoch 001:  42716 / 47753 loss=2.7477, wps=34297.2, ups=1.99, wpb=17248.5, bsz=189734, num_updates=42700, lr=0.00486363, gnorm=0.383, clip=0, loss_scale=0, train_wall=50, wall=21396
+2020-05-28 23:40:57 | INFO | train_inner | epoch 001:  42816 / 47753 loss=2.70106, wps=35317, ups=2.01, wpb=17570.7, bsz=193278, num_updates=42800, lr=0.00486299, gnorm=0.365, clip=0, loss_scale=0, train_wall=50, wall=21445
+2020-05-28 23:41:47 | INFO | train_inner | epoch 001:  42916 / 47753 loss=2.68872, wps=35295.9, ups=2.02, wpb=17508.2, bsz=192590, num_updates=42900, lr=0.00486234, gnorm=0.346, clip=0, loss_scale=0, train_wall=50, wall=21495
+2020-05-28 23:42:11 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.0078125
+2020-05-28 23:42:38 | INFO | train_inner | epoch 001:  43017 / 47753 loss=2.67761, wps=34331.7, ups=1.97, wpb=17398.1, bsz=191379, num_updates=43000, lr=0.0048617, gnorm=0.338, clip=0, loss_scale=0, train_wall=51, wall=21546
+2020-05-28 23:43:27 | INFO | train_inner | epoch 001:  43117 / 47753 loss=2.69334, wps=34960.9, ups=2.02, wpb=17301.1, bsz=190312, num_updates=43100, lr=0.00486105, gnorm=0.372, clip=0, loss_scale=0, train_wall=49, wall=21595
+2020-05-28 23:44:17 | INFO | train_inner | epoch 001:  43217 / 47753 loss=2.7463, wps=34506.3, ups=2, wpb=17227.3, bsz=189500, num_updates=43200, lr=0.00486041, gnorm=0.357, clip=0, loss_scale=0, train_wall=50, wall=21645
+2020-05-28 23:45:07 | INFO | train_inner | epoch 001:  43317 / 47753 loss=2.72383, wps=35001.6, ups=2, wpb=17482.9, bsz=192312, num_updates=43300, lr=0.00485976, gnorm=0.342, clip=0, loss_scale=0, train_wall=50, wall=21695
+2020-05-28 23:45:58 | INFO | train_inner | epoch 001:  43417 / 47753 loss=2.76062, wps=34025.2, ups=1.97, wpb=17290.3, bsz=190194, num_updates=43400, lr=0.00485911, gnorm=0.364, clip=0, loss_scale=0, train_wall=51, wall=21746
+2020-05-28 23:46:48 | INFO | train_inner | epoch 001:  43517 / 47753 loss=2.70822, wps=34750.2, ups=1.98, wpb=17539.3, bsz=192932, num_updates=43500, lr=0.00485846, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=21796
+2020-05-28 23:47:39 | INFO | train_inner | epoch 001:  43617 / 47753 loss=2.70969, wps=34050.7, ups=1.97, wpb=17324.2, bsz=190566, num_updates=43600, lr=0.00485781, gnorm=0.361, clip=0, loss_scale=0, train_wall=51, wall=21847
+2020-05-28 23:48:29 | INFO | train_inner | epoch 001:  43717 / 47753 loss=2.68937, wps=35051.1, ups=1.99, wpb=17632.1, bsz=193954, num_updates=43700, lr=0.00485715, gnorm=0.348, clip=0, loss_scale=0, train_wall=50, wall=21897
+2020-05-28 23:49:20 | INFO | train_inner | epoch 001:  43817 / 47753 loss=2.72684, wps=34337, ups=1.99, wpb=17255.2, bsz=189807, num_updates=43800, lr=0.0048565, gnorm=0.348, clip=0, loss_scale=0, train_wall=50, wall=21948
+2020-05-28 23:50:10 | INFO | train_inner | epoch 001:  43917 / 47753 loss=2.70791, wps=34704.6, ups=2, wpb=17353.4, bsz=190888, num_updates=43900, lr=0.00485584, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=21998
+2020-05-28 23:51:00 | INFO | train_inner | epoch 001:  44017 / 47753 loss=2.71641, wps=34087.3, ups=1.97, wpb=17261.2, bsz=189873, num_updates=44000, lr=0.00485518, gnorm=0.338, clip=0, loss_scale=0, train_wall=51, wall=22048
+2020-05-28 23:51:50 | INFO | train_inner | epoch 001:  44117 / 47753 loss=2.66635, wps=35132, ups=2.02, wpb=17390.7, bsz=191298, num_updates=44100, lr=0.00485452, gnorm=0.347, clip=0, loss_scale=0, train_wall=49, wall=22098
+2020-05-28 23:52:39 | INFO | train_inner | epoch 001:  44217 / 47753 loss=2.70735, wps=34467.8, ups=2.01, wpb=17141.4, bsz=188555, num_updates=44200, lr=0.00485386, gnorm=0.37, clip=0, loss_scale=0, train_wall=50, wall=22148
+2020-05-28 23:53:30 | INFO | train_inner | epoch 001:  44317 / 47753 loss=2.70886, wps=34745, ups=1.98, wpb=17513.5, bsz=192648, num_updates=44300, lr=0.0048532, gnorm=0.355, clip=0, loss_scale=0, train_wall=50, wall=22198
+2020-05-28 23:54:21 | INFO | train_inner | epoch 001:  44417 / 47753 loss=2.71258, wps=34366.2, ups=1.98, wpb=17394.4, bsz=191339, num_updates=44400, lr=0.00485253, gnorm=0.363, clip=0, loss_scale=0, train_wall=51, wall=22249
+2020-05-28 23:55:11 | INFO | train_inner | epoch 001:  44517 / 47753 loss=2.72045, wps=34620.4, ups=1.99, wpb=17434, bsz=191774, num_updates=44500, lr=0.00485187, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=22299
+2020-05-28 23:56:01 | INFO | train_inner | epoch 001:  44617 / 47753 loss=2.71079, wps=34466.1, ups=1.98, wpb=17404.7, bsz=191452, num_updates=44600, lr=0.0048512, gnorm=0.38, clip=0, loss_scale=0, train_wall=50, wall=22349
+2020-05-28 23:56:52 | INFO | train_inner | epoch 001:  44717 / 47753 loss=2.71791, wps=34071.6, ups=1.96, wpb=17357.4, bsz=190931, num_updates=44700, lr=0.00485053, gnorm=0.365, clip=0, loss_scale=0, train_wall=51, wall=22400
+2020-05-28 23:57:42 | INFO | train_inner | epoch 001:  44817 / 47753 loss=2.69389, wps=35107.2, ups=2.01, wpb=17468.6, bsz=192155, num_updates=44800, lr=0.00484986, gnorm=0.357, clip=0, loss_scale=0, train_wall=50, wall=22450
+2020-05-28 23:58:33 | INFO | train_inner | epoch 001:  44917 / 47753 loss=2.70007, wps=34740.4, ups=1.96, wpb=17741.2, bsz=195153, num_updates=44900, lr=0.00484919, gnorm=0.334, clip=0, loss_scale=0, train_wall=51, wall=22501
+2020-05-28 23:59:23 | INFO | train_inner | epoch 001:  45017 / 47753 loss=2.7301, wps=34828, ups=2.01, wpb=17293.4, bsz=190228, num_updates=45000, lr=0.00484851, gnorm=0.36, clip=0, loss_scale=0, train_wall=50, wall=22551
+2020-05-29 00:00:13 | INFO | train_inner | epoch 001:  45117 / 47753 loss=2.72986, wps=34469.1, ups=1.99, wpb=17287.6, bsz=190163, num_updates=45100, lr=0.00484784, gnorm=0.361, clip=0, loss_scale=0, train_wall=50, wall=22601
+2020-05-29 00:01:03 | INFO | train_inner | epoch 001:  45217 / 47753 loss=2.72432, wps=34739.1, ups=2.01, wpb=17317.6, bsz=190493, num_updates=45200, lr=0.00484716, gnorm=0.359, clip=0, loss_scale=0, train_wall=50, wall=22651
+2020-05-29 00:01:53 | INFO | train_inner | epoch 001:  45317 / 47753 loss=2.71454, wps=34738.4, ups=2, wpb=17412.4, bsz=191536, num_updates=45300, lr=0.00484649, gnorm=0.368, clip=0, loss_scale=0, train_wall=50, wall=22701
+2020-05-29 00:02:42 | INFO | train_inner | epoch 001:  45417 / 47753 loss=2.69796, wps=34641.1, ups=2.02, wpb=17122.7, bsz=188350, num_updates=45400, lr=0.00484581, gnorm=0.385, clip=0, loss_scale=0, train_wall=49, wall=22750
+2020-05-29 00:03:33 | INFO | train_inner | epoch 001:  45517 / 47753 loss=2.71592, wps=34555.6, ups=1.99, wpb=17385, bsz=191235, num_updates=45500, lr=0.00484513, gnorm=0.352, clip=0, loss_scale=0, train_wall=50, wall=22801
+2020-05-29 00:04:23 | INFO | train_inner | epoch 001:  45617 / 47753 loss=2.7115, wps=34137.2, ups=1.99, wpb=17162.2, bsz=188784, num_updates=45600, lr=0.00484444, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=22851
+2020-05-29 00:05:13 | INFO | train_inner | epoch 001:  45717 / 47753 loss=2.69869, wps=34595.4, ups=2.01, wpb=17171.3, bsz=188885, num_updates=45700, lr=0.00484376, gnorm=0.37, clip=0, loss_scale=0, train_wall=50, wall=22901
+2020-05-29 00:06:02 | INFO | train_inner | epoch 001:  45817 / 47753 loss=2.73114, wps=34222.9, ups=2.04, wpb=16810.6, bsz=184916, num_updates=45800, lr=0.00484308, gnorm=0.374, clip=0, loss_scale=0, train_wall=49, wall=22950
+2020-05-29 00:06:52 | INFO | train_inner | epoch 001:  45917 / 47753 loss=2.71113, wps=34185.3, ups=1.98, wpb=17307.4, bsz=190382, num_updates=45900, lr=0.00484239, gnorm=0.337, clip=0, loss_scale=0, train_wall=51, wall=23000
+2020-05-29 00:07:42 | INFO | train_inner | epoch 001:  46017 / 47753 loss=2.6723, wps=35089, ups=2, wpb=17535.7, bsz=192893, num_updates=46000, lr=0.0048417, gnorm=0.342, clip=0, loss_scale=0, train_wall=50, wall=23050
+2020-05-29 00:08:32 | INFO | train_inner | epoch 001:  46117 / 47753 loss=2.72876, wps=34196.8, ups=2, wpb=17086.6, bsz=187952, num_updates=46100, lr=0.00484101, gnorm=0.358, clip=0, loss_scale=0, train_wall=50, wall=23100
+2020-05-29 00:09:23 | INFO | train_inner | epoch 001:  46217 / 47753 loss=2.68414, wps=34333.7, ups=1.99, wpb=17295.2, bsz=190247, num_updates=46200, lr=0.00484032, gnorm=0.338, clip=0, loss_scale=0, train_wall=50, wall=23151
+2020-05-29 00:10:12 | INFO | train_inner | epoch 001:  46317 / 47753 loss=2.67781, wps=34539.1, ups=2.01, wpb=17205.7, bsz=189262, num_updates=46300, lr=0.00483963, gnorm=0.352, clip=0, loss_scale=0, train_wall=50, wall=23201
+2020-05-29 00:11:02 | INFO | train_inner | epoch 001:  46417 / 47753 loss=2.64557, wps=35047.8, ups=2.01, wpb=17473.7, bsz=192211, num_updates=46400, lr=0.00483894, gnorm=0.353, clip=0, loss_scale=0, train_wall=50, wall=23250
+2020-05-29 00:11:34 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.00390625
+2020-05-29 00:11:53 | INFO | train_inner | epoch 001:  46518 / 47753 loss=2.68621, wps=33747, ups=1.97, wpb=17165.7, bsz=188823, num_updates=46500, lr=0.00483824, gnorm=0.372, clip=0, loss_scale=0, train_wall=51, wall=23301
+2020-05-29 00:12:43 | INFO | train_inner | epoch 001:  46618 / 47753 loss=2.69145, wps=34906.5, ups=2.01, wpb=17381.6, bsz=191198, num_updates=46600, lr=0.00483755, gnorm=0.361, clip=0, loss_scale=0, train_wall=50, wall=23351
+2020-05-29 00:13:33 | INFO | train_inner | epoch 001:  46718 / 47753 loss=2.71073, wps=34199.7, ups=2, wpb=17109.2, bsz=188202, num_updates=46700, lr=0.00483685, gnorm=0.344, clip=0, loss_scale=0, train_wall=50, wall=23401
+2020-05-29 00:14:23 | INFO | train_inner | epoch 001:  46818 / 47753 loss=2.71533, wps=34523.2, ups=2, wpb=17254.6, bsz=189801, num_updates=46800, lr=0.00483615, gnorm=0.419, clip=0, loss_scale=0, train_wall=50, wall=23451
+2020-05-29 00:15:13 | INFO | train_inner | epoch 001:  46918 / 47753 loss=2.72069, wps=34542.2, ups=1.99, wpb=17391.4, bsz=191305, num_updates=46900, lr=0.00483545, gnorm=0.362, clip=0, loss_scale=0, train_wall=50, wall=23501
+2020-05-29 00:16:04 | INFO | train_inner | epoch 001:  47018 / 47753 loss=2.71864, wps=34600.5, ups=1.99, wpb=17422, bsz=191642, num_updates=47000, lr=0.00483475, gnorm=0.372, clip=0, loss_scale=0, train_wall=50, wall=23552
+2020-05-29 00:16:54 | INFO | train_inner | epoch 001:  47118 / 47753 loss=2.71287, wps=34210.1, ups=1.99, wpb=17149, bsz=188639, num_updates=47100, lr=0.00483404, gnorm=0.385, clip=0, loss_scale=0, train_wall=50, wall=23602
+2020-05-29 00:17:44 | INFO | train_inner | epoch 001:  47218 / 47753 loss=2.72425, wps=34728.7, ups=2.01, wpb=17307.7, bsz=190384, num_updates=47200, lr=0.00483334, gnorm=0.364, clip=0, loss_scale=0, train_wall=50, wall=23652
+2020-05-29 00:18:16 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.001953125
+2020-05-29 00:18:30 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.0009765625
+2020-05-29 00:18:35 | INFO | train_inner | epoch 001:  47320 / 47753 loss=2.69576, wps=34151.7, ups=1.95, wpb=17482.1, bsz=192303, num_updates=47300, lr=0.00483263, gnorm=0.439, clip=0, loss_scale=0, train_wall=51, wall=23703
+2020-05-29 00:19:25 | INFO | train_inner | epoch 001:  47420 / 47753 loss=2.70932, wps=34456.8, ups=2.01, wpb=17164.3, bsz=188808, num_updates=47400, lr=0.00483192, gnorm=0.359, clip=0, loss_scale=0, train_wall=50, wall=23753
+2020-05-29 00:20:14 | INFO | train_inner | epoch 001:  47520 / 47753 loss=2.69742, wps=34566.2, ups=2.02, wpb=17116.6, bsz=188283, num_updates=47500, lr=0.00483121, gnorm=0.354, clip=0, loss_scale=0, train_wall=49, wall=23802
+2020-05-29 00:21:04 | INFO | train_inner | epoch 001:  47620 / 47753 loss=2.69513, wps=35283.8, ups=2.01, wpb=17550.2, bsz=193053, num_updates=47600, lr=0.0048305, gnorm=0.337, clip=0, loss_scale=0, train_wall=50, wall=23852
+2020-05-29 00:21:54 | INFO | train_inner | epoch 001:  47720 / 47753 loss=2.65749, wps=34784.9, ups=2, wpb=17410.5, bsz=191516, num_updates=47700, lr=0.00482979, gnorm=0.352, clip=0, loss_scale=0, train_wall=50, wall=23902
+/home/mc/workspace/wav2vec/fairseq-master/fairseq/tasks/fairseq_task.py:406: UserWarning: Criterions should implement the reduce_metrics API. Falling back to deprecated aggregate_logging_outputs API.
+  criterion.__class__.reduce_metrics(logging_outputs)
+/home/mc/workspace/wav2vec/fairseq-master/fairseq/tasks/fairseq_task.py:406: UserWarning: Criterions should implement the reduce_metrics API. Falling back to deprecated aggregate_logging_outputs API.
+  criterion.__class__.reduce_metrics(logging_outputs)
+2020-05-29 00:23:21 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers may help.
+2020-05-29 00:23:21 | INFO | valid | epoch 001 | valid on 'valid' subset | loss 2.68967 | wps 157366 | wpb 17404.7 | bsz 191451 | num_updates 47733
+2020-05-29 00:23:22 | INFO | fairseq.checkpoint_utils | saved checkpoint ./model/checkpoint_best.pt (epoch 1 @ 47733 updates, score 2.689666880851929) (writing took 0.9232910639984766 seconds)
+2020-05-29 00:23:22 | INFO | fairseq.data.iterators | Data loading buffer is empty or nearly empty. This may indicate a data loading bottleneck, and increasing the number of workers may help.
+2020-05-29 00:23:22 | INFO | train | epoch 001 | loss 3.01989 | wps 34441.8 | ups 1.99 | wpb 17297.1 | bsz 190268 | num_updates 47733 | lr 0.00482956 | gnorm 0.531 | clip 0.2 | loss_scale 0 | train_wall 23862 | wall 23990
+2020-05-29 00:24:10 | INFO | train_inner | epoch 002:     67 / 47753 loss=2.68005, wps=12685.8, ups=0.73, wpb=17289.6, bsz=190186, num_updates=47800, lr=0.00482908, gnorm=0.348, clip=0, loss_scale=0, train_wall=51, wall=24038
+2020-05-29 00:25:00 | INFO | train_inner | epoch 002:    167 / 47753 loss=2.75018, wps=34785.4, ups=1.99, wpb=17472.4, bsz=192197, num_updates=47900, lr=0.00482836, gnorm=0.45, clip=0, loss_scale=0, train_wall=50, wall=24089
+2020-05-29 00:25:51 | INFO | train_inner | epoch 002:    267 / 47753 loss=2.7274, wps=33764.7, ups=1.99, wpb=16979.6, bsz=186776, num_updates=48000, lr=0.00482765, gnorm=0.362, clip=0, loss_scale=0, train_wall=50, wall=24139
+2020-05-29 00:26:41 | INFO | train_inner | epoch 002:    367 / 47753 loss=2.68401, wps=34549, ups=2, wpb=17297.3, bsz=190271, num_updates=48100, lr=0.00482693, gnorm=0.348, clip=0, loss_scale=0, train_wall=50, wall=24189
+2020-05-29 00:27:31 | INFO | train_inner | epoch 002:    467 / 47753 loss=2.66745, wps=34905.5, ups=2.01, wpb=17395.4, bsz=191349, num_updates=48200, lr=0.00482621, gnorm=0.36, clip=0, loss_scale=0, train_wall=50, wall=24239
+2020-05-29 00:28:21 | INFO | train_inner | epoch 002:    567 / 47753 loss=2.74363, wps=34030.4, ups=2, wpb=16977.5, bsz=186753, num_updates=48300, lr=0.00482549, gnorm=0.377, clip=0, loss_scale=0, train_wall=50, wall=24289
+2020-05-29 00:29:11 | INFO | train_inner | epoch 002:    667 / 47753 loss=2.70827, wps=34498.4, ups=2, wpb=17266.8, bsz=189935, num_updates=48400, lr=0.00482477, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=24339
+2020-05-29 00:30:02 | INFO | train_inner | epoch 002:    767 / 47753 loss=2.68113, wps=34420.6, ups=1.96, wpb=17524.2, bsz=192766, num_updates=48500, lr=0.00482404, gnorm=0.331, clip=0, loss_scale=0, train_wall=51, wall=24390
+2020-05-29 00:30:22 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.00048828125
+2020-05-29 00:30:52 | INFO | train_inner | epoch 002:    868 / 47753 loss=2.69829, wps=34478.1, ups=1.99, wpb=17364.7, bsz=191011, num_updates=48600, lr=0.00482332, gnorm=0.345, clip=0, loss_scale=0, train_wall=50, wall=24440
+2020-05-29 00:31:42 | INFO | train_inner | epoch 002:    968 / 47753 loss=2.65374, wps=34953.9, ups=2.01, wpb=17404, bsz=191444, num_updates=48700, lr=0.00482259, gnorm=0.34, clip=0, loss_scale=0, train_wall=50, wall=24490
+2020-05-29 00:32:12 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.000244140625
+2020-05-29 00:32:32 | INFO | train_inner | epoch 002:   1069 / 47753 loss=2.65513, wps=34318, ups=1.99, wpb=17249.6, bsz=189745, num_updates=48800, lr=0.00482186, gnorm=0.35, clip=0, loss_scale=0, train_wall=50, wall=24540
+2020-05-29 00:33:22 | INFO | train_inner | epoch 002:   1169 / 47753 loss=2.68295, wps=34845.7, ups=2.01, wpb=17368.9, bsz=191058, num_updates=48900, lr=0.00482113, gnorm=0.351, clip=0, loss_scale=0, train_wall=50, wall=24590
+2020-05-29 00:34:12 | INFO | train_inner | epoch 002:   1269 / 47753 loss=2.69253, wps=34551.1, ups=1.98, wpb=17493.7, bsz=192431, num_updates=49000, lr=0.0048204, gnorm=0.355, clip=0, loss_scale=0, train_wall=51, wall=24641
+2020-05-29 00:34:57 | INFO | fairseq.trainer | NOTE: overflow detected, setting loss scale to: 0.0001220703125
+2020-05-29 00:35:04 | INFO | train_inner | epoch 002:   1370 / 47753 loss=2.70858, wps=34504.2, ups=1.95, wpb=17662.9, bsz=194292, num_updates=49100, lr=0.00481967, gnorm=0.358, clip=0, loss_scale=0, train_wall=51, wall=24692
+2020-05-29 00:35:13 | WARNING | fairseq.nan_detector | Inf detected in output of module.feature_extractor.conv_layers.1.0, shape: torch.Size([2, 512, 3673]), forward input max: 1611.0, input min: 0.0
+2020-05-29 00:35:13 | WARNING | fairseq.nan_detector | NaN detected in output of module.wav2vec_predictions, shape: torch.Size([118404]), backward
+Traceback (most recent call last):
+  File "../../train.py", line 11, in <module>
+    cli_main()
+  File "/home/mc/workspace/wav2vec/fairseq-master/fairseq_cli/train.py", line 365, in cli_main
+    nprocs=args.distributed_world_size,
+  File "/home/mc/anaconda3/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 200, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method='spawn')
+  File "/home/mc/anaconda3/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 158, in start_processes
+    while not context.join():
+  File "/home/mc/anaconda3/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 119, in join
+    raise Exception(msg)
+Exception: 
+
+-- Process 0 terminated with the following error:
+Traceback (most recent call last):
+  File "/home/mc/anaconda3/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 20, in _wrap
+    fn(i, *args)
+  File "/home/mc/workspace/wav2vec/fairseq-master/fairseq_cli/train.py", line 333, in distributed_main
+    main(args, init_distributed=True)
+  File "/home/mc/workspace/wav2vec/fairseq-master/fairseq_cli/train.py", line 120, in main
+    valid_losses, should_stop = train(args, trainer, task, epoch_itr)
+  File "/home/mc/anaconda3/lib/python3.7/contextlib.py", line 74, in inner
+    return func(*args, **kwds)
+  File "/home/mc/workspace/wav2vec/fairseq-master/fairseq_cli/train.py", line 206, in train
+    log_output = trainer.train_step(samples)
+  File "/home/mc/anaconda3/lib/python3.7/contextlib.py", line 74, in inner
+    return func(*args, **kwds)
+  File "/home/mc/workspace/wav2vec/fairseq-master/fairseq/trainer.py", line 475, in train_step
+    grad_norm = self.clip_grad_norm(self.args.clip_norm)
+  File "/home/mc/workspace/wav2vec/fairseq-master/fairseq/trainer.py", line 696, in clip_grad_norm
+    return self.optimizer.clip_grad_norm(clip_norm, aggregate_norm_fn=None)
+  File "/home/mc/workspace/wav2vec/fairseq-master/fairseq/optim/fp16_optimizer.py", line 178, in clip_grad_norm
+    ).format(self.min_loss_scale))
+FloatingPointError: Minimum loss scale reached (0.0001). Your loss is probably exploding. Try lowering the learning rate, using gradient clipping or increasing the batch size.
+
